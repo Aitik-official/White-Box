@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Rubik } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -16,6 +17,12 @@ const rubik = Rubik({
   variable: "--font-heading",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   title: "WHITE BOX — High-Tech Hardware, Electronics & Living Gear",
@@ -33,7 +40,10 @@ export default function RootLayout({
         <link rel="icon" href="/whitebox-logo.png" />
       </head>
       <body>
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          {children}
+          <MobileBottomNav />
+        </CartProvider>
       </body>
     </html>
   );
