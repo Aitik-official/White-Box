@@ -127,7 +127,7 @@ export default function CheckoutPage() {
         </div>
 
         <form onSubmit={handlePaymentSubmit}>
-          <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: "36px", alignItems: "start" }}>
+          <div className="checkout-layout-grid" style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: "36px", alignItems: "start" }}>
             
             {/* Left Column: Shipping Details & Payment Selection */}
             <div>

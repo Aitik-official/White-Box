@@ -88,6 +88,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
       {/* Main Product Showcase Box (Amazon / Flipkart layout) */}
       <div className="container" style={{ padding: "30px 20px" }}>
         <div 
+          className="product-detail-grid"
           style={{ 
             background: "#ffffff", 
             borderRadius: "20px", 

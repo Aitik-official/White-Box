@@ -248,7 +248,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#f1f5f9", fontFamily: "var(--font-family)" }}>
+    <div className="admin-layout-container" style={{ display: "flex", minHeight: "100vh", background: "#f1f5f9", fontFamily: "var(--font-family)" }}>
       {/* Toast Alert */}
       {toast && (
         <div 
@@ -275,6 +275,7 @@ export default function AdminDashboardPage() {
 
       {/* Admin Sidebar */}
       <aside 
+        className="admin-sidebar"
         style={{
           width: "280px",
           background: "var(--wb-navy)",
@@ -397,9 +398,9 @@ export default function AdminDashboardPage() {
       </aside>
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, padding: "32px 40px", overflowY: "auto" }}>
+      <main className="admin-main-content" style={{ flex: 1, padding: "32px 40px", overflowY: "auto" }}>
         {/* Header Bar */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
+        <div className="admin-header-bar" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px", flexWrap: "wrap", gap: "16px" }}>
           <div>
             <h1 style={{ fontSize: "26px", fontWeight: 900, color: "var(--wb-navy)" }}>
               {activeTab === "overview" && "Store Analytics & Overview"}
@@ -479,7 +480,7 @@ export default function AdminDashboardPage() {
         {activeTab === "overview" && (
           <div>
             {/* Top Stat Cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px", marginBottom: "32px" }}>
+            <div className="admin-stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px", marginBottom: "32px" }}>
               <div style={{ background: "#ffffff", padding: "24px", borderRadius: "16px", boxShadow: "var(--shadow-sm)", border: "1px solid var(--border-card)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", color: "var(--text-muted)", fontSize: "13px", fontWeight: 700 }}>
                   <span>Total Revenue</span>

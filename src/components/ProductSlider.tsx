@@ -14,14 +14,33 @@ interface ProductSliderProps {
 
 export default function ProductSlider({ title, badge = "FEATURED", products, id }: ProductSliderProps) {
   const [startIndex, setStartIndex] = useState(0);
-  const itemsPerPage = 6;
+
+  // Responsive items per page
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+
+  React.useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth <= 480) {
+        setItemsPerPage(2);
+      } else if (window.innerWidth <= 768) {
+        setItemsPerPage(2);
+      } else if (window.innerWidth <= 1024) {
+        setItemsPerPage(4);
+      } else {
+        setItemsPerPage(6);
+      }
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handlePrev = () => {
-    setStartIndex((prev) => Math.max(0, prev - 1));
+    setStartIndex((prev) => Math.max(0, prev - itemsPerPage));
   };
 
   const handleNext = () => {
-    setStartIndex((prev) => Math.min(products.length - itemsPerPage, prev + 1));
+    setStartIndex((prev) => Math.min(products.length - itemsPerPage, prev + itemsPerPage));
   };
 
   const visibleProducts = products.slice(startIndex, startIndex + itemsPerPage);

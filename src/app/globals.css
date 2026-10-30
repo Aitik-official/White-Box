@@ -1161,6 +1161,18 @@ html {
 @media (max-width: 768px) {
   body {
     padding-bottom: 70px; /* Space for bottom navigation */
+    overflow-x: hidden;
+  }
+
+  .wb-container, main, .container {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  .dept-mega-dropdown {
+    grid-template-columns: 1fr !important;
+    max-height: 80vh;
+    overflow-y: auto !important;
   }
 
   .mobile-bottom-nav {
@@ -1270,9 +1282,56 @@ html {
   .deals-modern-banner {
     padding: 20px 16px;
   }
+
+  /* Catalog shop page responsive layout */
+  .shop-layout-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .shop-filter-sidebar {
+    margin-bottom: 20px;
+  }
+
+  /* Cart page responsive layout */
+  .cart-layout-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Checkout page responsive layout */
+  .checkout-layout-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Product details responsive layout */
+  .product-detail-grid {
+    grid-template-columns: 1fr !important;
+    padding: 20px 16px !important;
+  }
+
+  /* Admin panel mobile layout */
+  .admin-layout-container {
+    flex-direction: column !important;
+  }
+
+  .admin-sidebar {
+    width: 100% !important;
+  }
+
+  .admin-main-content {
+    padding: 20px 16px !important;
+  }
+
+  .admin-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
 }
 
 @media (max-width: 480px) {
+  .admin-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
   .products-modern-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;

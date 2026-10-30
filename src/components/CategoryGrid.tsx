@@ -35,11 +35,11 @@ export default function CategoryGrid() {
             <span className="section-pill-tag">EXPLORE</span>
           </h2>
           <Link 
-            href="#products" 
+            href="/shop" 
             style={{ 
               fontSize: "13px", 
               fontWeight: 700, 
-              color: "#1d35a6" 
+              color: "var(--wb-blue)" 
             }}
           >
             View All Categories →
@@ -48,7 +48,7 @@ export default function CategoryGrid() {
 
         <div className="category-modern-strip">
           {CATEGORIES.map((cat, idx) => (
-            <Link key={idx} href="#products" className="category-modern-card">
+            <Link key={idx} href={`/shop?category=${encodeURIComponent(cat.name)}`} className="category-modern-card">
               <div 
                 className="category-icon-circle"
                 style={{ background: cat.gradient }}

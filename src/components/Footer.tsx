@@ -91,30 +91,30 @@ export default function Footer() {
           <div>
             <h4 className="footer-modern-title">Information</h4>
             <ul style={{ listStyle: "none" }}>
-              <li className="footer-link-item"><Link href="#shipping">Shipping & Returns</Link></li>
-              <li className="footer-link-item"><Link href="#contact">Contact Us</Link></li>
-              <li className="footer-link-item"><Link href="#blog">Blog & Tech Guides</Link></li>
-              <li className="footer-link-item"><Link href="#sitemap">Sitemap</Link></li>
+              <li className="footer-link-item"><Link href="/shop">Browse Catalog</Link></li>
+              <li className="footer-link-item"><Link href="/wishlist">Saved Wishlist</Link></li>
+              <li className="footer-link-item"><Link href="/cart">Shopping Cart</Link></li>
+              <li className="footer-link-item"><Link href="/admin">Admin Portal</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="footer-modern-title">Brands</h4>
             <ul style={{ listStyle: "none" }}>
-              <li className="footer-link-item"><Link href="#brands">WhiteBox Hardware</Link></li>
-              <li className="footer-link-item"><Link href="#brands">OFS Premium</Link></li>
-              <li className="footer-link-item"><Link href="#brands">Common Good</Link></li>
-              <li className="footer-link-item"><Link href="#brands">Sagaform Tech</Link></li>
+              <li className="footer-link-item"><Link href="/shop?q=OnePlus">OnePlus Official</Link></li>
+              <li className="footer-link-item"><Link href="/shop?q=Samsung">Samsung Authorized</Link></li>
+              <li className="footer-link-item"><Link href="/shop?q=Apple">Apple Devices</Link></li>
+              <li className="footer-link-item"><Link href="/shop?q=Anker">Anker Soundcore</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="footer-modern-title">Categories</h4>
             <ul style={{ listStyle: "none" }}>
-              <li className="footer-link-item"><Link href="#flash-deals">Flash Deals</Link></li>
-              <li className="footer-link-item"><Link href="#categories">Gaming Controllers</Link></li>
-              <li className="footer-link-item"><Link href="#categories">Power Saws & Drills</Link></li>
-              <li className="footer-link-item"><Link href="#categories">Smart Audio</Link></li>
+              <li className="footer-link-item"><Link href="/shop?tag=HOT">Flash Deals</Link></li>
+              <li className="footer-link-item"><Link href="/shop?department=Electronics%20%26%20Gadgets">Smartphones & Audio</Link></li>
+              <li className="footer-link-item"><Link href="/shop?department=Power%20%26%20Hand%20Tools">Tools & Workshop</Link></li>
+              <li className="footer-link-item"><Link href="/shop?department=Home%20%26%20Furniture">Home & Studio</Link></li>
             </ul>
           </div>
 

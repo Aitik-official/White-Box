@@ -292,17 +292,18 @@ export default function Header() {
               {/* Amazon / Flipkart Style 2-Column Mega Flyout Menu */}
               {deptOpen && (
                 <div 
+                  className="dept-mega-dropdown"
                   style={{
                     position: "absolute",
                     top: "calc(100% + 10px)",
                     left: 0,
-                    width: "680px",
+                    width: "min(680px, calc(100vw - 32px))",
                     background: "#ffffff",
                     borderRadius: "14px",
                     boxShadow: "0 20px 45px rgba(0,0,0,0.22)",
                     border: "1px solid #e2e8f0",
                     display: "grid",
-                    gridTemplateColumns: "260px 1fr",
+                    gridTemplateColumns: "minmax(200px, 260px) 1fr",
                     zIndex: 250,
                     overflow: "hidden",
                     animation: "fadeInDown 0.2s ease"

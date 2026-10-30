@@ -117,10 +117,10 @@ function ShopContent() {
 
       {/* Main Catalog View: Sidebar Filters + Products Grid */}
       <div className="container" style={{ padding: "30px 20px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: "30px", alignItems: "start" }}>
+        <div className="shop-layout-grid" style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: "30px", alignItems: "start" }}>
           
           {/* Left Filter Sidebar (Amazon / Flipkart Style) */}
-          <aside style={{ background: "#ffffff", borderRadius: "16px", padding: "24px", border: "1px solid #e2e8f0", boxShadow: "0 2px 10px rgba(0,0,0,0.03)" }}>
+          <aside className="shop-filter-sidebar" style={{ background: "#ffffff", borderRadius: "16px", padding: "24px", border: "1px solid #e2e8f0", boxShadow: "0 2px 10px rgba(0,0,0,0.03)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", paddingBottom: "12px", borderBottom: "1px solid #f1f5f9" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 800, fontSize: "16px", color: "#0f172a" }}>
                 <Filter size={18} color="#0066ff" />

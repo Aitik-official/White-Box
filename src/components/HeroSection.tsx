@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const HERO_CARDS = [
   {
-    href: "#products",
+    href: "/shop?department=Electronics%20%26%20Gadgets",
     image: "/banners/banner-hero.webp",
     alt: "Gaming Headset",
     label: "DISCOVER NOW",
@@ -18,28 +18,28 @@ const HERO_CARDS = [
 
 const TILE_CARDS = [
   {
-    href: "#products",
+    href: "/shop?category=Smartphones",
     image: "/banners/tile-1.webp",
     alt: "Pro Smartphone 5G",
     title: "Pro Smartphone 5G",
     category: "Cellphone & Tablets",
   },
   {
-    href: "#products",
+    href: "/shop?q=Galaxy",
     image: "/banners/tile-2.webp",
     alt: "Phone Galaxy S10",
     title: "Phone Galaxy S10",
     category: "Cellphone & Tablets",
   },
   {
-    href: "#products",
+    href: "/shop?category=Wireless%20Earbuds",
     image: "/banners/tile-3.webp",
     alt: "Wireless Earbuds",
     title: "Wireless Earbuds",
     category: "Wireless Earbuds",
   },
   {
-    href: "#products",
+    href: "/shop?department=Home%20%26%20Furniture",
     image: "/banners/tile-4.webp",
     alt: "Executive Lounge Chair",
     title: "Executive Lounge Chair",
@@ -53,7 +53,7 @@ export default function HeroSection() {
       <div className="container">
         <div className="hero-mordern-grid">
           {/* Main Hero Banner — full image background */}
-          <Link href="#products" className="hero-main-card" style={{ position: "relative", overflow: "hidden", display: "block" }}>
+          <Link href="/shop?department=Electronics%20%26%20Gadgets" className="hero-main-card" style={{ position: "relative", overflow: "hidden", display: "block" }}>
             <Image
               src="/banners/banner-hero.webp"
               alt="Gaming Headset"

@@ -71,6 +71,7 @@ export default function Home() {
         />
 
         {/* Section 8: From Our Blog */}
+        <BlogSection />
 
       </main>
 
