@@ -1,0 +1,296 @@
+{
+  "structure": [
+    {
+      "line": 377,
+      "text": "<div class=\"header-top sticky-hidden\">"
+    },
+    {
+      "line": 463,
+      "text": "<div class=\"header-center\">"
+    },
+    {
+      "line": 560,
+      "text": "<div class=\"header-bottom\">"
+    },
+    {
+      "line": 562,
+      "text": "<div class=\"row header-bottom-gutters\">"
+    },
+    {
+      "line": 563,
+      "text": "<div class=\"header-bottom-left col-lg-3 col-md-2 col-12\">"
+    },
+    {
+      "line": 790,
+      "text": "<div class=\"header-bottom-center col-lg-9 col-md-10 col-12\">"
+    },
+    {
+      "line": 844,
+      "text": "<div class=\"wb-slideshow\">"
+    },
+    {
+      "line": 1046,
+      "text": "<div class=\"wb-section wb-section--section1 \">"
+    },
+    {
+      "line": 1050,
+      "text": "<h3 class=\"block-title \">"
+    },
+    {
+      "line": 1051,
+      "text": "<span class=\"block-title--inner\">"
+    },
+    {
+      "line": 2841,
+      "text": "<div class=\"wb-section wb-section--section2 \">"
+    },
+    {
+      "line": 2845,
+      "text": "<h5 class=\"block-title\">"
+    },
+    {
+      "line": 3040,
+      "text": "<div class=\"wb-section wb-section--section3 \">"
+    },
+    {
+      "line": 3049,
+      "text": "<h5 class=\"block-title\">"
+    },
+    {
+      "line": 3050,
+      "text": "<span class=\"block-title--inner\">"
+    },
+    {
+      "line": 3053,
+      "text": "<div class=\"block-title--deals\" >"
+    },
+    {
+      "line": 3082,
+      "text": "<div class=\"wb-section wb-section--section4 \">"
+    },
+    {
+      "line": 3160,
+      "text": "<div class=\"wb-section wb-section--section5 \">"
+    },
+    {
+      "line": 3164,
+      "text": "<h3 class=\"block-title \">"
+    },
+    {
+      "line": 3165,
+      "text": "<span class=\"block-title--inner\">"
+    },
+    {
+      "line": 4477,
+      "text": "<div class=\"wb-section wb-section--section6 \">"
+    },
+    {
+      "line": 4507,
+      "text": "<div class=\"wb-section wb-section--section7 \">"
+    },
+    {
+      "line": 4511,
+      "text": "<h3 class=\"block-title \">"
+    },
+    {
+      "line": 4512,
+      "text": "<span class=\"block-title--inner\">"
+    },
+    {
+      "line": 5585,
+      "text": "<div class=\"wb-section wb-section--section8 \">"
+    },
+    {
+      "line": 5589,
+      "text": "<h3 class=\"block-title\">"
+    },
+    {
+      "line": 5590,
+      "text": "<span class=\"block-title--inner\">"
+    },
+    {
+      "line": 5928,
+      "text": "<div class=\"wb-section wb-section--none \">"
+    },
+    {
+      "line": 5966,
+      "text": "<footer class=\"footer \" role=\"contentinfo\">"
+    },
+    {
+      "line": 5967,
+      "text": "<section class=\"footer-center \">"
+    },
+    {
+      "line": 6079,
+      "text": "<article class=\"col-xl-4 col-lg-4 col-sm-12 footer-infor collapsed-block \" data-section-type=\"storeInfo\">"
+    },
+    {
+      "line": 6080,
+      "text": "<div class=\"footer-logo\">"
+    },
+    {
+      "line": 6087,
+      "text": "<div class=\"footer-info-list\">"
+    },
+    {
+      "line": 6099,
+      "text": "<article class=\"col collapsed-block \" data-section-type=\"footer-webPages\">"
+    },
+    {
+      "line": 6100,
+      "text": "<h3 class=\"footer-info-heading\">"
+    },
+    {
+      "line": 6109,
+      "text": "<ul class=\"footer-info-list\">"
+    },
+    {
+      "line": 6117,
+      "text": "<article class=\"col collapsed-block \"  data-section-type=\"footer-brands\">"
+    },
+    {
+      "line": 6118,
+      "text": "<h3 class=\"footer-info-heading\">"
+    },
+    {
+      "line": 6127,
+      "text": "<ul class=\"footer-info-list\">"
+    },
+    {
+      "line": 6137,
+      "text": "<li class=\"footer-viewall\"><a href=\"https://wb-duka2.mybigcommerce.com/brands/\">View All</a></li>"
+    },
+    {
+      "line": 6141,
+      "text": "<article class=\"col collapsed-block\"  data-section-type=\"footer-categories\">"
+    },
+    {
+      "line": 6142,
+      "text": "<h3 class=\"footer-info-heading\">"
+    },
+    {
+      "line": 6151,
+      "text": "<ul class=\"footer-info-list\">"
+    },
+    {
+      "line": 6167,
+      "text": "<li class=\"footer-viewall\">"
+    },
+    {
+      "line": 6173,
+      "text": "<article class=\"col-xl-4 col-lg-8 col-sm-12 col collapsed-block footer-newletter\"  data-section-type=\"footer-categories\">"
+    },
+    {
+      "line": 6177,
+      "text": "<h3 class=\"footer-info-heading\">"
+    },
+    {
+      "line": 6187,
+      "text": "<div class=\"footer-info-list\">"
+    },
+    {
+      "line": 6188,
+      "text": "<div class=\"footer-newsletter-summary\">Join 60.000+ subscribers and get a new discount coupon"
+    },
+    {
+      "line": 6230,
+      "text": "<section class=\"footer-bottom\">"
+    },
+    {
+      "line": 6233,
+      "text": "<article class=\"footer-webPages d-none d-md-block\" data-section-type=\"footer-webPages\">"
+    },
+    {
+      "line": 6234,
+      "text": "<ul class=\"footer-webpages-list\">"
+    },
+    {
+      "line": 6241,
+      "text": "<div class=\"footer-copyright\">"
+    },
+    {
+      "line": 6245,
+      "text": "<div class=\"footer-payment \">"
+    },
+    {
+      "line": 6246,
+      "text": "<div class=\"footer-payment-icons\">"
+    },
+    {
+      "line": 6247,
+      "text": "<svg class=\"footer-payment-icon\"><use xlink:href=\"#icon-logo-american-express\"></use></svg>"
+    },
+    {
+      "line": 6248,
+      "text": "<svg class=\"footer-payment-icon\"><use xlink:href=\"#icon-logo-discover\"></use></svg>"
+    },
+    {
+      "line": 6249,
+      "text": "<svg class=\"footer-payment-icon\"><use xlink:href=\"#icon-logo-mastercard\"></use></svg>"
+    },
+    {
+      "line": 6250,
+      "text": "<svg class=\"footer-payment-icon\"><use xlink:href=\"#icon-logo-paypal\"></use></svg>"
+    },
+    {
+      "line": 6251,
+      "text": "<svg class=\"footer-payment-icon\"><use xlink:href=\"#icon-logo-visa\"></use></svg>"
+    },
+    {
+      "line": 6261,
+      "text": "</footer>"
+    }
+  ],
+  "images": [
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/129x31/logo_white_1665876560__44080.original.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/1280w/carousel/3/slide-home2.png?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/1280w/carousel/4/slide-home1.png?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/1280w/carousel/5/slide-home3.png?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner1.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner2.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner3.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner4.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/111/377/30__75003.1623899750.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/107/379/28__81294.1623899898.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/104/384/31-1__98800.1623899968.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/103/388/14__92848.1623900052.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/98/391/1__24060.1623900118.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/97/393/12__66039.1623900198.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/94/395/13__11804.1623900264.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/93/399/27__00227.1623900335.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/88/404/19__30227.1623900382.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/86/408/6-2__92578.1623900436.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/81/409/3__19585.1623900470.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/80/413/33__13771.1623900524.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home1/category/3.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home1/category/8.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home1/category/1.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home1/category/2.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home1/category/5.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home1/category/4.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home1/category/6.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/stencil/97b6d290-b7ce-0139-e56b-52c488b5fb62/e/eca2d6a0-bb82-0139-a286-6e99306f1fbe/img/loading.svg",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner-5.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner-6.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner-7.png",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/111/377/30__75003.1623899750.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/107/379/28__81294.1623899898.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/104/384/31-1__98800.1623899968.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/103/388/14__92848.1623900052.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/98/391/1__24060.1623900118.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/97/393/12__66039.1623900198.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/94/395/13__11804.1623900264.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/93/399/27__00227.1623900335.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/88/404/19__30227.1623900382.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/86/408/6-2__92578.1623900436.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/81/409/3__19585.1623900470.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/100x100/products/80/413/33__13771.1623900524.jpg?c=1",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/160w/uploaded_images/2.jpg",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/160w/uploaded_images/3.jpg",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/160w/uploaded_images/6.jpg",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/160w/uploaded_images/5.jpg",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/160w/uploaded_images/4.jpg",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/160w/uploaded_images/1.jpg",
+    "https://cdn11.bigcommerce.com/s-eofpr986v7/stencil/97b6d290-b7ce-0139-e56b-52c488b5fb62/e/eca2d6a0-bb82-0139-a286-6e99306f1fbe/img/icon-sprite.svg"
+  ]
+}
