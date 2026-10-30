@@ -1,6 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { ALL_PRODUCTS, getProductBySlug } from "@/data/siteData";
+import { getProductBySlugFromDB } from "@/lib/productsService";
 import ProductDetailClient from "./ProductDetailClient";
 
 export function generateStaticParams() {
@@ -15,7 +16,13 @@ export default async function ProductDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  
+  // Pull live product data from MongoDB database
+  let product = await getProductBySlugFromDB(slug);
+  
+  if (!product) {
+    product = getProductBySlug(slug) || null;
+  }
 
   if (!product) {
     notFound();

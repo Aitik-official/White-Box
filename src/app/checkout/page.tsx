@@ -48,7 +48,7 @@ export default function CheckoutPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handlePaymentSubmit = (e: React.FormEvent) => {
+  const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
 
@@ -69,10 +69,39 @@ export default function CheckoutPage() {
       sessionStorage.setItem("last_order", JSON.stringify(orderSummary));
     }
 
+    // Persist order to MongoDB database
+    try {
+      await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId,
+          customerName: formData.fullName,
+          customerEmail: formData.email,
+          customerPhone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          postalCode: formData.pincode,
+          paymentMethod,
+          items: cart.map(i => ({
+            id: i.product.id,
+            title: i.product.title,
+            price: i.product.price,
+            quantity: i.quantity,
+            img: i.product.img
+          })),
+          subtotal,
+          total: grandTotal
+        })
+      });
+    } catch (err) {
+      console.error("Failed to persist order to database:", err);
+    }
+
     setTimeout(() => {
       clearCart();
       router.push(`/order-confirmation?orderId=${orderId}`);
-    }, 1500);
+    }, 1200);
   };
 
   return (

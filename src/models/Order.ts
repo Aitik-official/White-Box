@@ -51,3 +51,4 @@ const OrderSchema = new Schema<IOrder>(
 );
 
 export default mongoose.models.Order || mongoose.model<IOrder>("Order", OrderSchema);
+
