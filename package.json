@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "lucide-react": "^1.55.0",
     "mongoose": "^9.11.4",
     "next": "16.4.3",
@@ -16,6 +17,7 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

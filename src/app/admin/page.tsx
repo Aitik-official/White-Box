@@ -24,7 +24,38 @@ import {
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [pinInput, setPinInput] = useState("");
+  const [pinError, setPinError] = useState("");
   const [activeTab, setActiveTab] = useState<"overview" | "products" | "orders" | "settings">("overview");
+
+  // Check saved session auth
+  useEffect(() => {
+    if (sessionStorage.getItem("wb_admin_auth") === "true") {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handlePinSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPinError("");
+    try {
+      const res = await fetch("/api/admin/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin: pinInput }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem("wb_admin_auth", "true");
+      } else {
+        setPinError(data.error || "Invalid PIN");
+      }
+    } catch {
+      setPinError("Connection error");
+    }
+  };
   const [stats, setStats] = useState({
     totalProducts: 0,
     totalOrders: 0,
@@ -158,6 +189,63 @@ export default function AdminDashboardPage() {
       notify("Failed to update settings");
     }
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--wb-navy)", fontFamily: "var(--font-family)", padding: "20px" }}>
+        <div style={{ background: "#ffffff", borderRadius: "16px", padding: "40px", maxWidth: "420px", width: "100%", textAlign: "center", boxShadow: "0 20px 40px rgba(0,0,0,0.3)" }}>
+          <div style={{ marginBottom: "20px" }}>
+            <WhiteBoxLogo height={42} variant="dark" />
+          </div>
+          <h2 style={{ fontSize: "20px", fontWeight: 800, color: "var(--wb-navy)", marginBottom: "6px" }}>
+            Admin Access Required
+          </h2>
+          <p style={{ fontSize: "13px", color: "var(--text-muted)", marginBottom: "24px" }}>
+            Enter your WhiteBox security PIN to access the database management panel.
+          </p>
+
+          <form onSubmit={handlePinSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+            <input
+              type="password"
+              required
+              autoFocus
+              placeholder="Enter Admin PIN..."
+              value={pinInput}
+              onChange={(e) => setPinInput(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "14px",
+                borderRadius: "8px",
+                border: "1.5px solid var(--border-card)",
+                fontSize: "15px",
+                textAlign: "center",
+                outline: "none",
+                letterSpacing: "3px"
+              }}
+            />
+
+            {pinError && (
+              <div style={{ color: "#ef4444", fontSize: "12px", fontWeight: 700 }}>
+                {pinError}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="checkout-btn"
+              style={{ padding: "14px", marginTop: "4px" }}
+            >
+              Verify PIN & Enter
+            </button>
+
+            <Link href="/" style={{ fontSize: "13px", color: "var(--wb-blue)", fontWeight: 700, marginTop: "8px" }}>
+              ← Return to Store
+            </Link>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "#f1f5f9", fontFamily: "var(--font-family)" }}>
@@ -851,3 +939,4 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+

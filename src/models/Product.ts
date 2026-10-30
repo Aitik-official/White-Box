@@ -34,18 +34,18 @@ const ProductSchema = new Schema<IProductDoc>(
     img: { type: String, required: true },
     gallery: { type: [String], default: [] },
     price: { type: String, required: true },
-    rawPrice: { type: Number, required: true },
+    rawPrice: { type: Number, required: true, index: true },
     oldPrice: { type: String, default: null },
     rawOldPrice: { type: Number, default: null },
-    brand: { type: String, required: true },
+    brand: { type: String, required: true, index: true },
     vendor: { type: String, required: true },
     vendorRating: { type: Number, default: 4.8 },
-    category: { type: String, required: true },
-    department: { type: String, required: true },
+    category: { type: String, required: true, index: true },
+    department: { type: String, required: true, index: true },
     description: { type: String, required: true },
     features: { type: [String], default: [] },
     specs: { type: Map, of: String, default: {} },
-    rating: { type: Number, default: 4.8 },
+    rating: { type: Number, default: 4.8, index: true },
     reviewsCount: { type: Number, default: 0 },
     inStock: { type: Boolean, default: true },
     stockCount: { type: Number, default: 10 },
@@ -55,5 +55,13 @@ const ProductSchema = new Schema<IProductDoc>(
   { timestamps: true }
 );
 
-export default mongoose.models.Product || mongoose.model<IProductDoc>("Product", ProductSchema);
+// High performance Compound text search index
+ProductSchema.index({
+  title: "text",
+  brand: "text",
+  category: "text",
+  department: "text",
+  description: "text",
+});
 
+export default mongoose.models.Product || mongoose.model<IProductDoc>("Product", ProductSchema);

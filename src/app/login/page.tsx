@@ -17,11 +17,41 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg("");
     if (!email) return;
-    login(email, isRegister ? name : undefined);
-    router.push("/shop");
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          name: isRegister ? name : undefined,
+          isLogin: !isRegister,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setErrorMsg(data.error || "Authentication failed");
+        setLoading(false);
+        return;
+      }
+
+      login(data.user.email, data.user.name);
+      router.push("/shop");
+    } catch {
+      setErrorMsg("Failed to connect to authentication server");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -225,12 +255,19 @@ export default function LoginPage() {
                   />
                 </div>
 
+                {errorMsg && (
+                  <div style={{ color: "#ef4444", fontSize: "13px", fontWeight: 700, textAlign: "center", background: "#fee2e2", padding: "8px", borderRadius: "6px" }}>
+                    {errorMsg}
+                  </div>
+                )}
+
                 <button
                   type="submit"
+                  disabled={loading}
                   className="checkout-btn"
                   style={{ marginTop: "10px", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
                 >
-                  <span>{isRegister ? "Create Account" : "Sign In to WhiteBox"}</span>
+                  <span>{loading ? "Verifying..." : isRegister ? "Create Account" : "Sign In to WhiteBox"}</span>
                   <ArrowRight size={16} />
                 </button>
               </form>
