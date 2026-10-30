@@ -2,6 +2,17 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Order from "@/models/Order";
 
+export async function GET() {
+  try {
+    await connectDB();
+    const orders = await Order.find().sort({ createdAt: -1 }).lean();
+    return NextResponse.json({ success: true, count: orders.length, orders });
+  } catch (err: unknown) {
+    console.error("Orders GET error:", err);
+    return NextResponse.json({ error: "Failed to fetch orders" }, { status: 500 });
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -59,3 +70,25 @@ export async function POST(req: Request) {
   }
 }
 
+// Admin: Update order status
+export async function PATCH(req: Request) {
+  try {
+    const { orderId, status } = await req.json();
+    await connectDB();
+
+    const order = await Order.findOneAndUpdate(
+      { orderId },
+      { $set: { status } },
+      { new: true }
+    );
+
+    if (!order) {
+      return NextResponse.json({ error: "Order not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, order });
+  } catch (err: unknown) {
+    console.error("Order update error:", err);
+    return NextResponse.json({ error: "Failed to update order" }, { status: 500 });
+  }
+}

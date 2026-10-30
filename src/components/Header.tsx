@@ -110,6 +110,10 @@ export default function Header() {
             </div>
 
             <div className="header-top-right">
+              <Link href="/admin" className="header-top-link" style={{ color: "var(--wb-cyan)" }}>
+                <span>Admin Panel</span>
+              </Link>
+
               <div className="header-top-link">
                 <span>My Account</span>
                 <ChevronDown size={12} />

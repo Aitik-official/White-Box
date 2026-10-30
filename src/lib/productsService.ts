@@ -54,3 +54,4 @@ export async function getProductBySlugFromDB(slug: string): Promise<ProductType 
     return ALL_PRODUCTS.find((p) => p.slug === slug) || null;
   }
 }
+
