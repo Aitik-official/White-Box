@@ -24,49 +24,83 @@ export interface Product {
   tagColor?: string;
 }
 
+export const CLOUDINARY_MEDIA = {
+  logo: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245602/whitebox/brand/whitebox-logo.png",
+  hero: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245604/whitebox/banners/banner-hero.webp",
+  tiles: [
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245604/whitebox/banners/tile-1.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245606/whitebox/banners/tile-2.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245606/whitebox/banners/tile-3.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245607/whitebox/banners/tile-4.webp",
+  ],
+  products: {
+    1: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245609/whitebox/products/product-1.webp",
+    2: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245610/whitebox/products/product-2.webp",
+    3: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245612/whitebox/products/product-3.webp",
+    4: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245613/whitebox/products/product-4.webp",
+    5: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245614/whitebox/products/product-5.webp",
+    6: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245615/whitebox/products/product-6.webp",
+    7: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245616/whitebox/products/product-7.webp",
+    8: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245617/whitebox/products/product-8.webp",
+    9: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245617/whitebox/products/product-9.webp",
+    10: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245618/whitebox/products/product-10.webp",
+    11: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245619/whitebox/products/product-11.webp",
+    12: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245619/whitebox/products/product-12.webp",
+  },
+  promos: [
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245620/whitebox/promos/ixcqakhdunyyhtuphdxv.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245621/whitebox/promos/aetwxl5hpkpgigrc8kfj.webp",
+  ],
+  blogs: [
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245622/whitebox/blog/cbwulzafbpnnxhuacyjl.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245622/whitebox/blog/coa2bpzricbknqenxfzn.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245623/whitebox/blog/tyhowbsomnh8x7omybl0.webp",
+  ],
+};
+
 export const DEPARTMENTS_DATA = [
   {
     name: "Electronics & Gadgets",
     slug: "electronics",
     icon: "Smartphone",
-    subcategories: ["Smartphones", "Wireless Earbuds", "Gaming Consoles", "Smartwatches", "Tablets", "Headphones"]
+    subcategories: ["Smartphones", "Wireless Earbuds", "Gaming Consoles", "Smartwatches", "Tablets", "Headphones"],
   },
   {
     name: "Computers & Gaming",
     slug: "gaming",
     icon: "Gamepad2",
-    subcategories: ["Gaming Controllers", "Laptops", "Mechanical Keyboards", "Monitors", "Graphics Cards"]
+    subcategories: ["Gaming Controllers", "Laptops", "Mechanical Keyboards", "Monitors", "Graphics Cards"],
   },
   {
     name: "Power & Hand Tools",
     slug: "tools",
     icon: "Wrench",
-    subcategories: ["Cordless Drills", "Power Saws", "Grinders & Polishers", "Routers & Planers", "Hand Tool Sets"]
+    subcategories: ["Cordless Drills", "Power Saws", "Grinders & Polishers", "Routers & Planers", "Hand Tool Sets"],
   },
   {
     name: "Air Compressors & Pumps",
     slug: "compressors",
     icon: "Sliders",
-    subcategories: ["Pneumatic Compressors", "Spray Guns", "Hoses & Fittings", "Pressure Gauges"]
+    subcategories: ["Pneumatic Compressors", "Spray Guns", "Hoses & Fittings", "Pressure Gauges"],
   },
   {
     name: "Home & Furniture",
     slug: "furniture",
     icon: "Armchair",
-    subcategories: ["Lounge Chairs", "Studio Desks", "Terrariums & Plants", "Smart Lighting"]
+    subcategories: ["Lounge Chairs", "Studio Desks", "Terrariums & Plants", "Smart Lighting"],
   },
   {
     name: "Watches & Wearables",
     slug: "wearables",
     icon: "Watch",
-    subcategories: ["Smart Fitness Bands", "Luxury Chronographs", "Eyewear & Sunglasses"]
+    subcategories: ["Smart Fitness Bands", "Luxury Chronographs", "Eyewear & Sunglasses"],
   },
   {
     name: "Woodworking & Workshop",
     slug: "woodworking",
     icon: "Scissors",
-    subcategories: ["Jointers", "Carving Chisels", "Wood Lathes", "Dust Collectors"]
-  }
+    subcategories: ["Jointers", "Carving Chisels", "Wood Lathes", "Dust Collectors"],
+  },
 ];
 
 export const VENDORS = [
@@ -75,7 +109,7 @@ export const VENDORS = [
   { id: "samsung", name: "Samsung Authorized", rating: 4.8, verified: true },
   { id: "common-good", name: "Common Good Tech", rating: 4.6, verified: true },
   { id: "sagaform", name: "Sagaform Studios", rating: 4.7, verified: true },
-  { id: "anker", name: "Anker Innovations", rating: 4.9, verified: true }
+  { id: "anker", name: "Anker Innovations", rating: 4.9, verified: true },
 ];
 
 export const ALL_PRODUCTS: Product[] = [
@@ -83,11 +117,8 @@ export const ALL_PRODUCTS: Product[] = [
     id: 1,
     slug: "oneplus-nord-n10-5g",
     title: "OnePlus Nord N10 5G Unlocked",
-    img: "/products/product-1.webp",
-    gallery: [
-      "/products/product-1.webp",
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner2.png"
-    ],
+    img: CLOUDINARY_MEDIA.products[1],
+    gallery: [CLOUDINARY_MEDIA.products[1]],
     price: "₹19,999",
     rawPrice: 19999,
     oldPrice: "₹24,999",
@@ -103,31 +134,28 @@ export const ALL_PRODUCTS: Product[] = [
       "Smooth 90Hz FHD+ IPS Display",
       "64 MP Quad Camera System with Ultra-Wide Lens",
       "Dual Stereo Speakers with Dirac Audio Tuner",
-      "Expandable Storage up to 512GB via MicroSD"
+      "Expandable Storage up to 512GB via MicroSD",
     ],
     specs: {
-      "Display": "6.49-inch 90Hz FHD+",
-      "Processor": "Qualcomm Snapdragon 690 5G",
-      "RAM": "6GB LPDDR4x",
+      Display: "6.49-inch 90Hz FHD+",
+      Processor: "Qualcomm Snapdragon 690 5G",
+      RAM: "6GB LPDDR4x",
       "Internal Storage": "128GB UFS 2.1",
-      "Battery": "4300 mAh with 30W Fast Charging"
+      Battery: "4300 mAh with 30W Fast Charging",
     },
     rating: 4.8,
     reviewsCount: 1420,
     inStock: true,
     stockCount: 42,
     tag: "BESTSELLER",
-    tagColor: "#ff4d6d"
+    tagColor: "#ff4d6d",
   },
   {
     id: 2,
     slug: "samsung-galaxy-s20-unlocked",
     title: "Samsung Galaxy S20 Unlocked Cloud Blue",
-    img: "/products/product-2.webp",
-    gallery: [
-      "/products/product-2.webp",
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner2.png"
-    ],
+    img: CLOUDINARY_MEDIA.products[2],
+    gallery: [CLOUDINARY_MEDIA.products[2]],
     price: "₹24,499",
     rawPrice: 24499,
     oldPrice: "₹29,999",
@@ -139,529 +167,473 @@ export const ALL_PRODUCTS: Product[] = [
     department: "Electronics & Gadgets",
     description: "Pro-grade triple camera with 30X Space Zoom, 120Hz Dynamic AMOLED 2X HDR10+ display, and hyper-fast 5G connectivity.",
     features: [
-      "Dynamic AMOLED 2X 120Hz Display",
-      "Single Take AI Camera Mode & 8K Video Recording",
-      "Space Zoom up to 30x",
-      "IP68 Water & Dust Resistant",
-      "Wireless PowerShare Support"
+      "120Hz Dynamic AMOLED 2X Display",
+      "64MP Telephoto with 30X Super Resolution Zoom",
+      "8K Video Snap & Single Take AI",
+      "All-day Intelligent 4000mAh Battery",
+      "IP68 Water & Dust Resistance",
     ],
     specs: {
-      "Display": "6.2-inch Quad HD+ Dynamic AMOLED",
-      "Processor": "Exynos 990 / Snapdragon 865",
-      "RAM": "8GB High-Speed LPDDR5",
-      "Internal Storage": "128GB",
-      "Battery": "4000 mAh Intelligent All-Day Battery"
+      Display: "6.2-inch Quad HD+ Dynamic AMOLED 2X",
+      Processor: "Exynos 990 / Snapdragon 865",
+      RAM: "8GB LPDDR5",
+      "Internal Storage": "128GB Expandable",
+      Battery: "4000 mAh Fast Wireless Charging 2.0",
     },
-    rating: 4.7,
-    reviewsCount: 890,
+    rating: 4.9,
+    reviewsCount: 980,
     inStock: true,
     stockCount: 18,
-    tag: "-18% OFF",
-    tagColor: "#7928ca"
+    tag: "FEATURED",
+    tagColor: "#0066ff",
   },
   {
     id: 3,
     slug: "ps4-wireless-controller-gamepad",
     title: "DualShock 4 Wireless Controller Gamepad",
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/88/404/19__30227.1623900382.jpg?c=1",
-    gallery: [
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/88/404/19__30227.1623900382.jpg?c=1",
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner4.png"
-    ],
-    price: "₹3,999",
-    rawPrice: 3999,
-    oldPrice: "₹4,999",
-    rawOldPrice: 4999,
-    brand: "Sony PlayStation",
+    img: CLOUDINARY_MEDIA.products[3],
+    gallery: [CLOUDINARY_MEDIA.products[3]],
+    price: "₹4,299",
+    rawPrice: 4299,
+    oldPrice: "₹5,499",
+    rawOldPrice: 5499,
+    brand: "Sony",
     vendor: "WhiteBox Official",
     vendorRating: 4.9,
     category: "Gaming Controllers",
     department: "Computers & Gaming",
-    description: "Precision analog sticks, responsive triggers, built-in speaker, clickable multi-touch pad, and refined ergonomic grip for extended esports gaming.",
+    description: "Precision control for PlayStation 4 and PC gaming with responsive analog sticks, integrated light bar, touch pad, and stereo headset jack.",
     features: [
-      "Precision Control: Enhanced feel, shape, and sensitivity of dual analog sticks",
-      "Clickable Touch Pad for innovative gameplay interactions",
-      "Built-in 3.5mm Stereo Audio Jack and Mono Speaker",
-      "USB and Bluetooth Wireless Connectivity"
+      "Refined Analog Sticks & Triggers for Supreme Accuracy",
+      "Clickable Multi-Touch Pad and Integrated Light Bar",
+      "Built-in Speaker and 3.5mm Audio Output",
+      "SHARE Button for Instant Gameplay Streaming",
     ],
     specs: {
-      "Connectivity": "Bluetooth 2.1 + EDR & Micro-USB",
-      "Battery": "1000 mAh Lithium-ion Rechargeable",
-      "Motion Sensing": "Six-axis sensor (3-axis gyro, 3-axis accelerometer)",
-      "Weight": "210 grams"
+      Connectivity: "Bluetooth 2.1 + EDR & Micro-USB",
+      Battery: "Built-in 1000mAh Rechargeable Li-ion",
+      Compatibility: "PS4, PC, Mac, iOS, Android",
+      Weight: "210g",
     },
-    rating: 4.9,
+    rating: 4.7,
     reviewsCount: 2310,
     inStock: true,
-    stockCount: 75,
-    tag: "GAMING",
-    tagColor: "#ef4444"
+    stockCount: 55,
+    tag: "SALE",
+    tagColor: "#ff5722",
   },
   {
     id: 4,
-    slug: "canyon-star-raider-gaming-headset",
+    slug: "canyon-star-raider-headset",
     title: "Canyon Star Raider Pro 7.1 Surround Gaming Headset",
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner1.png",
-    gallery: [
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner1.png",
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/1280w/carousel/3/slide-home2.png?c=1"
-    ],
-    price: "₹2,499",
-    rawPrice: 2499,
-    oldPrice: "₹3,999",
-    rawOldPrice: 3999,
-    brand: "Canyon Audio",
-    vendor: "Common Good Tech",
-    vendorRating: 4.6,
+    img: CLOUDINARY_MEDIA.products[4],
+    gallery: [CLOUDINARY_MEDIA.products[4]],
+    price: "₹3,499",
+    rawPrice: 3499,
+    oldPrice: "₹4,999",
+    rawOldPrice: 4999,
+    brand: "Canyon",
+    vendor: "OFS Technology",
+    vendorRating: 4.7,
     category: "Headphones",
     department: "Electronics & Gadgets",
-    description: "Deep bass 50mm neodymium audio drivers with virtual 7.1 surround sound positioning, omnidirectional noise-cancelling boom mic, and glowing RGB illumination.",
+    description: "Immersive virtual 7.1 surround sound gaming headset with dynamic RGB lighting, noise-cancelling boom microphone, and memory foam earcups.",
     features: [
-      "50mm Neodymium Tuned Drivers for immersive positional audio",
-      "Virtual 7.1 Surround Audio engine for pin-point enemy tracking",
-      "Ultra-soft Memory Foam Ear Cushions",
-      "Braided anti-tangle 2.2m heavy-duty cable with in-line remote"
+      "Virtual 7.1 Directional Acoustic Audio",
+      "50mm Neodymium Drivers with Deep Bass Response",
+      "Adjustable Noise-Cancelling Omnidirectional Mic",
+      "RGB Chromatic Pulse Lighting on Earcups",
     ],
     specs: {
-      "Driver Size": "50mm Dynamic",
-      "Frequency Response": "20Hz - 20,000Hz",
-      "Microphone": "Omnidirectional with noise filtering",
-      "Interface": "USB + 3.5mm Audio Splitter"
+      Drivers: "50 mm Neodymium",
+      "Frequency Response": "20 Hz - 20 kHz",
+      Impedance: "32 Ohm",
+      Cable: "2.1m Braided USB Connector",
     },
     rating: 4.6,
-    reviewsCount: 430,
+    reviewsCount: 670,
     inStock: true,
-    stockCount: 30,
-    tag: "HOT DEAL",
-    tagColor: "#ff7043"
+    stockCount: 29,
+    tag: "HOT",
+    tagColor: "#ef4444",
   },
   {
     id: 5,
     slug: "galaxy-buds-plus-wireless",
     title: "Samsung Galaxy Buds Plus True Wireless Earbuds",
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner3.png",
-    gallery: [
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner3.png"
-    ],
-    price: "₹5,999",
-    rawPrice: 5999,
-    oldPrice: "₹8,999",
-    rawOldPrice: 8999,
+    img: CLOUDINARY_MEDIA.products[5],
+    gallery: [CLOUDINARY_MEDIA.products[5]],
+    price: "₹7,999",
+    rawPrice: 7999,
+    oldPrice: "₹11,999",
+    rawOldPrice: 11999,
     brand: "Samsung",
     vendor: "Samsung Authorized",
     vendorRating: 4.8,
     category: "Wireless Earbuds",
     department: "Electronics & Gadgets",
-    description: "2-way dynamic speaker system engineered by AKG with punchy bass and crystal clear high notes, adaptive 3-mic system for clear calls, and up to 22 hours playtime.",
+    description: "2-way dynamic speakers sound by AKG, 3-mic system for crystal-clear voice calls, and up to 22 hours of rich battery life with Qi wireless case.",
     features: [
-      "Rich Natural Sound by AKG with dedicated woofer and tweeter",
-      "11 Hours on-earbuds playtime + additional 11 hours with charging case",
-      "Qi Certified Wireless Charging compatibility",
-      "Ambient Sound control with adjustable volume levels"
+      "Sound by AKG with Dedicated Woofer & Tweeter",
+      "Adaptive 3-Microphone Array for Clean Calls",
+      "11 Hours Playtime + 11 Hours from Charging Case",
+      "Qi Wireless Charging & Ambient Sound Mode",
     ],
     specs: {
-      "Bluetooth": "Bluetooth v5.0",
-      "Battery Life": "22 Hours Total",
-      "Water Resistance": "IPX2 splash resistant",
-      "Sensors": "Accelerometer, IR, Hall, Touch"
+      Speakers: "2-Way Dynamic (Woofer + Tweeter)",
+      Battery: "85mAh (buds) + 270mAh (case)",
+      Connectivity: "Bluetooth 5.0 Multi-Device",
+      WaterResistance: "IPX2 Splash Resistance",
     },
-    rating: 4.7,
-    reviewsCount: 1670,
+    rating: 4.8,
+    reviewsCount: 1540,
     inStock: true,
-    stockCount: 25,
+    stockCount: 34,
     tag: "POPULAR",
-    tagColor: "#00bfa5"
+    tagColor: "#7928ca",
   },
   {
     id: 6,
     slug: "anker-soundcore-life-q20",
     title: "Anker Soundcore Life Q20 Hybrid Active Noise Cancelling",
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/86/408/6-2__92578.1623900436.jpg?c=1",
-    gallery: [
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/86/408/6-2__92578.1623900436.jpg?c=1"
-    ],
-    price: "₹16,499",
-    rawPrice: 16499,
-    oldPrice: "₹19,999",
-    rawOldPrice: 19999,
+    img: CLOUDINARY_MEDIA.products[6],
+    gallery: [CLOUDINARY_MEDIA.products[6]],
+    price: "₹5,499",
+    rawPrice: 5499,
+    oldPrice: "₹7,499",
+    rawOldPrice: 7499,
     brand: "Anker",
     vendor: "Anker Innovations",
     vendorRating: 4.9,
     category: "Headphones",
     department: "Electronics & Gadgets",
-    description: "Certified Hi-Res Audio with custom 40mm dynamic drivers, hybrid active noise cancellation reducing ambient noise by up to 90%, and 40-hour ultra battery life.",
+    description: "Hi-Res certified audio with custom 40mm drivers, hybrid active noise cancellation reducing ambient noises by up to 90%, and 40-hour playtime.",
     features: [
-      "Hi-Res Audio certified with extended 40 kHz high frequencies",
-      "Hybrid Active Noise Cancellation with internal and external microphones",
-      "BassUp Technology for real-time low-frequency amplification",
-      "40 Hours of playtime in ANC mode / 60 Hours in standard mode"
+      "Hybrid Active Noise Cancellation (4 Internal Microphones)",
+      "BassUp Technology for Instant 100% Bass Boost",
+      "Hi-Res Audio Certified with 40kHz Highs",
+      "40-Hour Non-Stop Playtime in ANC Mode (60H Standard)",
     ],
     specs: {
-      "Driver": "40mm Silk Diaphragm",
-      "Playtime": "40 Hours (ANC On), 60 Hours (ANC Off)",
-      "Charging": "Fast Charge (5 mins gives 4 hours playback)",
-      "Weight": "260 grams"
+      Audio: "40mm Dynamic Drivers (Hi-Res Audio)",
+      ANC: "Hybrid Active Noise Cancellation",
+      Playtime: "40 Hours (ANC On) / 60 Hours (ANC Off)",
+      FastCharging: "5 Mins Charge = 4 Hours Playtime",
     },
-    rating: 4.8,
-    reviewsCount: 3120,
+    rating: 4.9,
+    reviewsCount: 3820,
     inStock: true,
-    stockCount: 19,
+    stockCount: 62,
     tag: "TOP RATED",
-    tagColor: "#06b6d4"
+    tagColor: "#10b981",
   },
   {
     id: 7,
-    slug: "chair-swoon-lounge-velvet",
+    slug: "chair-swoon-lounge-armchair",
     title: "Chair Swoon Lounge Mid-Century Velvet Armchair",
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/1280w/carousel/5/slide-home3.png?c=1",
-    gallery: [
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/1280w/carousel/5/slide-home3.png?c=1"
-    ],
-    price: "₹12,999",
-    rawPrice: 12999,
-    oldPrice: "₹16,999",
-    rawOldPrice: 16999,
-    brand: "Sagaform Living",
+    img: CLOUDINARY_MEDIA.products[7],
+    gallery: [CLOUDINARY_MEDIA.products[7]],
+    price: "₹18,499",
+    rawPrice: 18499,
+    oldPrice: "₹24,000",
+    rawOldPrice: 24000,
+    brand: "Sagaform",
     vendor: "Sagaform Studios",
     vendorRating: 4.7,
     category: "Lounge Chairs",
     department: "Home & Furniture",
-    description: "Luxurious modern lounge armchair with premium deep navy velvet upholstery, ergonomic continuous back curve, and tapered solid steel legs with gold accents.",
+    description: "Sculptural mid-century lounge chair with high-resilience memory foam padding, stain-resistant premium velvet upholstery, and matte black steel legs.",
     features: [
-      "High-density resilience foam seating for all-day posture support",
-      "Water-repellent Dutch velvet fabric",
-      "Heavy-duty solid steel frame tested up to 180kg capacity",
-      "Easy 10-minute tool-free assembly"
+      "Ergonomic Contoured Shell for Long Sitting Sessions",
+      "Commercial-grade Hydrophobic Velvet Fabric",
+      "Reinforced Carbon Steel Leg Base with Non-Scratch Feet",
+      "Supports Weight up to 160 kg Comfortably",
     ],
     specs: {
-      "Dimensions": "82cm H x 76cm W x 78cm D",
-      "Weight Capacity": "180 kg",
-      "Frame Material": "Reinforced Cold Rolled Carbon Steel",
-      "Fabric": "High-Thread-Count Micro Velvet"
+      Dimensions: "84cm H x 76cm W x 80cm D",
+      Material: "Premium Velvet + Carbon Steel Legs",
+      WeightCapacity: "160 kg (350 lbs)",
+      Assembly: "Simple 10-Minute Toolless Assembly",
     },
-    rating: 4.9,
-    reviewsCount: 185,
+    rating: 4.8,
+    reviewsCount: 310,
     inStock: true,
-    stockCount: 8,
-    tag: "FURNITURE",
-    tagColor: "#8b5cf6"
+    stockCount: 12,
+    tag: "STUDIO",
+    tagColor: "#d91b5c",
   },
   {
     id: 8,
-    slug: "dewalt-brushless-cordless-drill-kit",
+    slug: "dewalt-20v-brushless-drill",
     title: "DeWalt 20V MAX Brushless Cordless Drill Driver Kit",
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/97/393/12__66039.1623900198.jpg?c=1",
-    gallery: [
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/97/393/12__66039.1623900198.jpg?c=1"
-    ],
-    price: "₹14,999",
-    rawPrice: 14999,
-    oldPrice: "₹18,500",
-    rawOldPrice: 18500,
-    brand: "DeWalt Pro",
-    vendor: "OFS Technology",
-    vendorRating: 4.7,
+    img: CLOUDINARY_MEDIA.products[8],
+    gallery: [CLOUDINARY_MEDIA.products[8]],
+    price: "₹12,999",
+    rawPrice: 12999,
+    oldPrice: "₹16,499",
+    rawOldPrice: 16499,
+    brand: "DeWalt",
+    vendor: "WhiteBox Official",
+    vendorRating: 4.9,
     category: "Cordless Drills",
     department: "Power & Hand Tools",
-    description: "Compact brushless motor delivers up to 57% more run-time over brushed, 2-speed transmission (0-500 / 0-1,750 RPM), and ergonomic comfort grip handle.",
+    description: "Compact high-performance brushless motor delivers 340 unit watts out (UWO) with 2-speed transmission and 3-mode LED work light with spotlight mode.",
     features: [
-      "High-performance Brushless Motor technology",
-      "Compact 6.3-inch front-to-back design fits into tight spaces",
-      "LED Foot Light with 20-second trigger release delay",
-      "Includes 2x 2.0Ah Lithium Batteries, Charger & ToughBox Case"
+      "Brushless Motor for 57% More Runtime over Brushed",
+      "High-Speed Transmission with 2-Speed Settings (0-500 / 0-1,750 RPM)",
+      "3-Mode LED Providing Lighting in Dark or Confined Spaces",
+      "Ergonomic Comfort Grip Handle Ideal for Prolonged Use",
     ],
     specs: {
-      "Voltage": "20V MAX",
-      "Chuck Size": "1/2-inch Ratcheting Metal",
-      "Speed": "0-500 / 0-1,750 RPM",
-      "Clutch Settings": "15 Torque Positions"
+      Voltage: "20V MAX Lithium-Ion",
+      MaxPower: "340 UWO",
+      ChuckSize: "1/2-inch Ratcheting Chuck",
+      Weight: "1.6 kg with Battery Included",
     },
     rating: 4.9,
-    reviewsCount: 920,
+    reviewsCount: 1890,
     inStock: true,
-    stockCount: 15,
-    tag: "PRO TOOLS",
-    tagColor: "#ffb300"
+    stockCount: 22,
+    tag: "PRO TOOL",
+    tagColor: "#eab308",
   },
   {
     id: 9,
-    slug: "bosch-heavy-duty-circular-power-saw",
+    slug: "bosch-professional-circular-saw",
     title: "Bosch Professional 18V Circular Power Saw",
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/103/388/14__92848.1623900052.jpg?c=1",
-    gallery: [
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/103/388/14__92848.1623900052.jpg?c=1"
-    ],
-    price: "₹17,499",
-    rawPrice: 17499,
-    oldPrice: "₹21,999",
-    rawOldPrice: 21999,
-    brand: "Bosch Power",
+    img: CLOUDINARY_MEDIA.products[9],
+    gallery: [CLOUDINARY_MEDIA.products[9]],
+    price: "₹14,299",
+    rawPrice: 14299,
+    oldPrice: "₹18,999",
+    rawOldPrice: 18999,
+    brand: "Bosch",
     vendor: "WhiteBox Official",
     vendorRating: 4.9,
     category: "Power Saws",
     department: "Power & Hand Tools",
-    description: "Fast cutting progress and long runtime thanks to powerful EC brushless motor and Electronic Cell Protection against battery overload.",
+    description: "Robust cordless circular saw designed for deep cuts up to 57mm in wood and composite materials, featuring Electronic Motor Protection (EMP) and dust extractor adapter.",
     features: [
-      "Heavy duty aluminum base plate and die-cast aluminum pendulum guard",
-      "Integrated LED work light and dust blower port",
-      "Fast electronic motor brake stops blade within 1.5 seconds",
-      "Bevel cut up to 50 degrees"
+      "Cuts up to 57mm at 90° and 42mm at 45°",
+      "Integrated LED Work Light and Cut-Line Blower",
+      "Electronic Motor Protection (EMP) Prevents Overload",
+      "Solid Die-Cast Aluminum Base Plate for Maximum Stability",
     ],
     specs: {
-      "Blade Diameter": "165mm",
-      "No-load speed": "3,400 RPM",
-      "Max Cutting Depth (90°)": "57 mm",
-      "Weight": "3.4 kg"
+      BladeDiameter: "165 mm (Bore 20 mm)",
+      NoLoadSpeed: "3,400 RPM",
+      MaxCuttingDepth: "57 mm at 90° / 42 mm at 45°",
+      Weight: "3.4 kg",
     },
-    rating: 4.7,
-    reviewsCount: 310,
+    rating: 4.8,
+    reviewsCount: 420,
     inStock: true,
-    stockCount: 12,
-    tag: "HARDWARE",
-    tagColor: "#2563eb"
+    stockCount: 15,
+    tag: "HEAVY DUTY",
+    tagColor: "#2563eb",
   },
   {
     id: 10,
-    slug: "orbit-smart-speaker-studio-360",
+    slug: "orbit-smart-studio-speaker",
     title: "Orbit Smart Studio HiFi 360 Acoustic Speaker",
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/81/409/3__19585.1623900470.jpg?c=1",
-    gallery: [
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/81/409/3__19585.1623900470.jpg?c=1"
-    ],
-    price: "₹6,999",
-    rawPrice: 6999,
-    oldPrice: "₹9,499",
-    rawOldPrice: 9499,
-    brand: "WhiteBox",
-    vendor: "WhiteBox Official",
-    vendorRating: 4.9,
-    category: "Smart Lighting",
-    department: "Home & Furniture",
-    description: "Handcrafted natural fir base supporting a spatial acoustic dispersion chamber. Connects via Wi-Fi, AirPlay 2, and Bluetooth 5.2.",
+    img: CLOUDINARY_MEDIA.products[10],
+    gallery: [CLOUDINARY_MEDIA.products[10]],
+    price: "₹8,999",
+    rawPrice: 8999,
+    oldPrice: "₹12,499",
+    rawOldPrice: 12499,
+    brand: "Orbit",
+    vendor: "Common Good Tech",
+    vendorRating: 4.6,
+    category: "Headphones",
+    department: "Electronics & Gadgets",
+    description: "Room-filling 360-degree high-fidelity wireless speaker featuring spatial audio calibration, dual passive bass radiators, and built-in voice assistance.",
     features: [
-      "360-degree Omnidirectional Acoustic Waveguide",
-      "Multi-room synchronised audio support",
-      "Voice assistant integration with far-field microphone array",
-      "Solid Scandinavian fir wood and anodized aluminum body"
+      "Omnidirectional 360-Degree Spatial Acoustic Waveguide",
+      "Dual Force-Cancelling Passive Bass Radiators",
+      "Apple AirPlay 2, Spotify Connect, and Bluetooth 5.2",
+      "Automatic Room Tuning Microphones for Any Acoustic Space",
     ],
     specs: {
-      "Output Power": "45W RMS",
-      "Frequency Response": "35Hz - 22,000Hz",
-      "Connectivity": "Wi-Fi 6, Bluetooth 5.2, Optical In, Aux 3.5mm",
-      "Power Source": "100-240V AC adapter"
+      Amplifiers: "3 Class-D Digital Amplifiers",
+      FrequencyRange: "38 Hz - 22 kHz",
+      Wireless: "Wi-Fi 6 802.11ax & Bluetooth 5.2",
+      Dimensions: "210 mm H x 150 mm Diameter",
     },
-    rating: 4.6,
-    reviewsCount: 145,
+    rating: 4.7,
+    reviewsCount: 780,
     inStock: true,
-    stockCount: 22,
-    tag: "STUDIO",
-    tagColor: "#7928ca"
+    stockCount: 25,
+    tag: "HIFI",
+    tagColor: "#8b5cf6",
   },
   {
     id: 11,
-    slug: "pneumatic-air-compressor-50l-pro",
+    slug: "whitebox-silent-air-compressor-50l",
     title: "WhiteBox Pro Silent Pneumatic Air Compressor 50L",
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/104/384/31-1__98800.1623899968.jpg?c=1",
-    gallery: [
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/104/384/31-1__98800.1623899968.jpg?c=1"
-    ],
+    img: CLOUDINARY_MEDIA.products[11],
+    gallery: [CLOUDINARY_MEDIA.products[11]],
     price: "₹21,999",
     rawPrice: 21999,
-    oldPrice: "₹26,999",
-    rawOldPrice: 26999,
-    brand: "WhiteBox Pro",
+    oldPrice: "₹28,500",
+    rawOldPrice: 28500,
+    brand: "WhiteBox",
     vendor: "WhiteBox Official",
     vendorRating: 4.9,
-    category: "Pneumatic Compressors",
+    category: "Air Compressors & Pumps",
     department: "Air Compressors & Pumps",
-    description: "Ultra-quiet oil-free twin piston compressor delivering 8 Bar continuous pressure. Ideal for spray painting, nail guns, pneumatic impact wrenches, and workshop maintenance.",
+    description: "Ultra-quiet oil-free twin piston compressor delivering clean pneumatic power at only 62 dB, with dual quick-connect pressure gauges and thermal cut-off.",
     features: [
-      "Ultra-quiet 60dB operating noise level",
-      "Oil-free maintenance-free motor design",
-      "50-liter thick steel pressure vessel with anti-rust coating",
-      "Dual quick-connect European brass air outlets"
+      "Ultra-Low Noise Operation: Only 62 dB(A)",
+      "100% Oil-Free Dual Piston Motor — Zero Maintenance",
+      "50 Liter Heavy Gauge Steel Pressure Vessel with Anti-Rust Coat",
+      "Dual Quick-Disconnect Couplers with Regulated Gauges",
     ],
     specs: {
-      "Tank Capacity": "50 Liters",
-      "Power": "2.5 HP (1800W)",
-      "Max Pressure": "8 Bar (116 PSI)",
-      "Air Flow": "220 Liters/min"
+      TankCapacity: "50 Liters",
+      Power: "2.0 HP (1500W)",
+      MaxPressure: "8 Bar (116 PSI)",
+      AirDisplacement: "210 L/min (7.4 CFM)",
     },
     rating: 4.9,
-    reviewsCount: 180,
+    reviewsCount: 215,
     inStock: true,
-    stockCount: 10,
-    tag: "INDUSTRIAL",
-    tagColor: "#0066ff"
+    stockCount: 8,
+    tag: "SILENT PRO",
+    tagColor: "#059669",
   },
   {
     id: 12,
-    slug: "precision-woodworking-jointer-plane",
+    slug: "ofs-benchtop-wood-jointer-6in",
     title: "OFS Pro Cast Iron Benchtop Wood Jointer 6-Inch",
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/98/391/1__24060.1623900118.jpg?c=1",
-    gallery: [
-      "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/300x300/products/98/391/1__24060.1623900118.jpg?c=1"
-    ],
-    price: "₹31,499",
-    rawPrice: 31499,
-    oldPrice: "₹38,000",
-    rawOldPrice: 38000,
+    img: CLOUDINARY_MEDIA.products[12],
+    gallery: [CLOUDINARY_MEDIA.products[12]],
+    price: "₹32,499",
+    rawPrice: 32499,
+    oldPrice: "₹39,999",
+    rawOldPrice: 39999,
     brand: "OFS",
     vendor: "OFS Technology",
     vendorRating: 4.7,
-    category: "Jointers",
+    category: "Woodworking & Workshop",
     department: "Woodworking & Workshop",
-    description: "Precision-ground cast iron table with helical spiral cutterhead, dual HSS reversible knives, and tilting fence for accurate 45 and 90-degree edge squaring.",
+    description: "Precision-machined cast iron benchtop jointer equipped with two high-speed steel reversible knives, 45-degree tilting fence, and dust collection port.",
     features: [
-      "Heavy duty cast iron vibration dampening infeed/outfeed tables",
-      "Helical cutterhead with 12 two-sided indexable carbide inserts",
-      "Integrated 2.5-inch dust collection port",
-      "Adjustable fence stops at 45° and 90°"
+      "Precision-Ground Cast Iron Infeed and Outfeed Tables",
+      "Two-Knife Cutterhead Operating at 10,000 RPM",
+      "Rigid Cast Iron Fence with Positive Stops at 90° and 45°",
+      "Integral Safety Cutter Guard and Push Blocks Included",
     ],
     specs: {
-      "Motor": "10 Amp 120V 1.5 HP",
-      "Cutterhead Speed": "12,000 cuts/min",
-      "Max Cutting Width": "6 Inches (152mm)",
-      "Max Depth of Cut": "1/8 Inch (3.2mm)"
+      Motor: "1.5 HP 230V Single-Phase Induction",
+      CuttingWidth: "152 mm (6-inch)",
+      MaxCutDepth: "3.2 mm (1/8-inch)",
+      TableLength: "760 mm Overall",
     },
     rating: 4.8,
-    reviewsCount: 95,
+    reviewsCount: 165,
     inStock: true,
-    stockCount: 6,
-    tag: "WORKSHOP",
-    tagColor: "#10b981"
-  }
+    stockCount: 5,
+    tag: "PRECISION",
+    tagColor: "#c2410c",
+  },
 ];
 
-// Helper to get product by slug
-export function getProductBySlug(slug: string): Product | undefined {
-  return ALL_PRODUCTS.find((p) => p.slug === slug);
-}
-
-// Backward compatibility alias
 export const PRODUCTS = ALL_PRODUCTS;
 
-export const CATEGORIES = [
-  { name: "Control Tools", icon: "Sliders", count: "12 Products", gradient: "linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%)", color: "#ff6b6b" },
-  { name: "Power Saws", icon: "Zap", count: "24 Products", gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)", color: "#00c6ff" },
-  { name: "Routers", icon: "Radio", count: "18 Products", gradient: "linear-gradient(135deg, #a855f7 0%, #ec4899 100%)", color: "#ec4899" },
-  { name: "Grinders", icon: "Disc", count: "15 Products", gradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)", color: "#10b981" },
-  { name: "Sanders", icon: "Square", count: "9 Products", gradient: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)", color: "#f59e0b" },
-  { name: "Saws", icon: "Scissors", count: "22 Products", gradient: "linear-gradient(135deg, #6366f1 0%, #3b82f6 100%)", color: "#6366f1" },
-  { name: "Jointers", icon: "Maximize2", count: "8 Products", gradient: "linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%)", color: "#06b6d4" },
-  { name: "Wrenches", icon: "Wrench", count: "31 Products", gradient: "linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)", color: "#f43f5e" }
-];
-
-export const HERO_SLIDES = [
+export const FEATURED_SLIDER_ITEMS = [
   {
     id: 1,
     title: "Gaming Headset Brilliant Lighting Effect",
     subtitle: "Wireless Connection With TV, Computer, Laptop...",
     buttonText: "DISCOVER NOW",
-    image: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/1280w/carousel/3/slide-home2.png?c=1",
-    badge: "FLASH PROMO",
-    gradient: "linear-gradient(135deg, #ff414d 0%, #ff5e62 50%, #ff7657 100%)"
+    badge: "WEEKEND SALE",
+    img: CLOUDINARY_MEDIA.hero,
   },
-  {
-    id: 2,
-    title: "Sport Edition Best Choice Of Your",
-    subtitle: "Active Noise Cancellation & 40H Wireless Battery...",
-    buttonText: "EXPLORE COLLECTION",
-    image: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/1280w/carousel/4/slide-home1.png?c=1",
-    badge: "TRENDING TECH",
-    gradient: "linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #06b6d4 100%)"
-  },
-  {
-    id: 3,
-    title: "Next Gen Audio & Gaming Controllers",
-    subtitle: "Haptic Feedback & Ultra Low Latency 2.4GHz...",
-    buttonText: "SHOP DEALS",
-    image: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/1280w/carousel/5/slide-home3.png?c=1",
-    badge: "HOT RELEASE",
-    gradient: "linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #c026d3 100%)"
-  }
 ];
 
-export const MODERN_TILES = [
+export const TILE_ITEMS = [
   {
     id: 1,
-    title: "Canyon Star Raider",
-    category: "Headphone & Audio",
-    gradient: "linear-gradient(135deg, #ff7043 0%, #ff5722 100%)",
-    image: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner1.png",
-    link: "/shop?category=Headphones"
+    title: "Pro Smartphone 5G",
+    category: "Cellphone & Tablets",
+    img: CLOUDINARY_MEDIA.tiles[0],
+    href: "/shop?category=Smartphones",
   },
   {
     id: 2,
-    title: "Phone Galaxy S20",
+    title: "Phone Galaxy S10",
     category: "Cellphone & Tablets",
-    gradient: "linear-gradient(135deg, #ec407a 0%, #d81b60 100%)",
-    image: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner2.png",
-    link: "/shop?category=Smartphones"
+    img: CLOUDINARY_MEDIA.tiles[1],
+    href: "/shop?q=Galaxy",
   },
   {
     id: 3,
-    title: "Galaxy Buds Plus",
+    title: "Wireless Earbuds",
     category: "Wireless Earbuds",
-    gradient: "linear-gradient(135deg, #26a69a 0%, #00897b 100%)",
-    image: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner3.png",
-    link: "/shop?category=Wireless%20Earbuds"
+    img: CLOUDINARY_MEDIA.tiles[2],
+    href: "/shop?category=Wireless%20Earbuds",
   },
   {
     id: 4,
-    title: "Chair Swoon Lounge",
+    title: "Executive Lounge Chair",
     category: "Decor & Furniture",
-    gradient: "linear-gradient(135deg, #7e57c2 0%, #5e35b1 100%)",
-    image: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/1280w/carousel/5/slide-home3.png?c=1",
-    link: "/shop?category=Lounge%20Chairs"
-  }
+    img: CLOUDINARY_MEDIA.tiles[3],
+    href: "/shop?department=Home%20%26%20Furniture",
+  },
+];
+
+export const CATEGORIES = [
+  { name: "Electronics", count: "140 Products", icon: "Sliders", gradient: "linear-gradient(135deg, #00b4d8 0%, #0066ff 100%)" },
+  { name: "Power Tools", count: "85 Products", icon: "Wrench", gradient: "linear-gradient(135deg, #ff5722 0%, #ff3d00 100%)" },
+  { name: "Audio & HiFi", count: "92 Products", icon: "Radio", gradient: "linear-gradient(135deg, #7928ca 0%, #d91b5c 100%)" },
+  { name: "Gaming Gear", count: "64 Products", icon: "Gamepad2", gradient: "linear-gradient(135deg, #ec407a 0%, #b71c1c 100%)" },
+  { name: "Furniture", count: "48 Products", icon: "Armchair", gradient: "linear-gradient(135deg, #059669 0%, #10b981 100%)" },
+  { name: "Smartwatches", count: "72 Products", icon: "Watch", gradient: "linear-gradient(135deg, #d91b5c 0%, #ff5722 100%)" },
+  { name: "Compressors", count: "36 Products", icon: "Sliders", gradient: "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)" },
+  { name: "Woodworking", count: "51 Products", icon: "Scissors", gradient: "linear-gradient(135deg, #b45309 0%, #d97706 100%)" },
 ];
 
 export const PROMO_STRIPS = [
   {
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner1.png",
-    title: "Weekend Cyber Sale — 40% Off",
+    img: CLOUDINARY_MEDIA.promos[0],
+    title: "Weekend Cyber Sale - 40% Off",
     subtitle: "Smart Wireless Gear",
-    gradient: "linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%)"
   },
   {
-    img: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner2.png",
+    img: CLOUDINARY_MEDIA.promos[1],
     title: "Heavy Duty Cordless Hardware",
     subtitle: "Lifetime Motor Warranty",
-    gradient: "linear-gradient(90deg, #b91c1c 0%, #ef4444 100%)"
-  }
+  },
 ];
 
 export const BLOG_POSTS = [
   {
     id: 1,
     title: "Top 10 Essential Power Tools Every Woodworker Needs",
-    date: "October 12, 2026",
-    comments: "3 Comments",
-    author: "Admin",
-    category: "Guide",
-    image: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner1.png",
-    excerpt: "Discover the most reliable, precise and durable power tools that make every DIY and workshop project effortless."
+    date: "October 18, 2026",
+    comments: "14 Comments",
+    image: CLOUDINARY_MEDIA.blogs[0],
+    excerpt: "From compound miter saws to high-precision benchtop jointers, here is the curated checklist for any serious wood studio.",
   },
   {
     id: 2,
     title: "How to Choose the Right Wireless Headset in 2026",
-    date: "October 08, 2026",
-    comments: "5 Comments",
-    author: "Admin",
-    category: "Audio",
-    image: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner2.png",
-    excerpt: "A comprehensive guide on sound fidelity, active noise cancellation, and ergonomic design for work and gaming."
+    date: "October 22, 2026",
+    comments: "8 Comments",
+    image: CLOUDINARY_MEDIA.blogs[1],
+    excerpt: "Breakdown of spatial audio latency, hybrid ANC driver efficiency, and multi-point Bluetooth pairing codecs.",
   },
   {
     id: 3,
     title: "Battery Maintenance Tips for Heavy-Duty Cordless Equipment",
-    date: "September 29, 2026",
-    comments: "8 Comments",
-    author: "Admin",
-    category: "Hardware",
-    image: "https://cdn11.bigcommerce.com/s-eofpr986v7/images/stencil/original/content/home3/banner/banner3.png",
-    excerpt: "Extend the lifetime of lithium-ion tool batteries with these expert maintenance and storage practices."
-  }
+    date: "October 26, 2026",
+    comments: "21 Comments",
+    image: CLOUDINARY_MEDIA.blogs[2],
+    excerpt: "Maximize lithium-ion battery lifecycle, cycle depth, and cold-weather discharge rates on your jobsite.",
+  },
 ];
 
+export function getProductBySlug(slug: string): Product | undefined {
+  return ALL_PRODUCTS.find((p) => p.slug === slug);
+}

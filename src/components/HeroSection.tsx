@@ -7,7 +7,7 @@ import Link from "next/link";
 const HERO_CARDS = [
   {
     href: "/shop?department=Electronics%20%26%20Gadgets",
-    image: "/banners/banner-hero.webp",
+    image: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245604/whitebox/banners/banner-hero.webp",
     alt: "Gaming Headset",
     label: "DISCOVER NOW",
     title: "Gaming Headset Brilliant Lighting Effect",
@@ -19,28 +19,28 @@ const HERO_CARDS = [
 const TILE_CARDS = [
   {
     href: "/shop?category=Smartphones",
-    image: "/banners/tile-1.webp",
+    image: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245604/whitebox/banners/tile-1.webp",
     alt: "Pro Smartphone 5G",
     title: "Pro Smartphone 5G",
     category: "Cellphone & Tablets",
   },
   {
     href: "/shop?q=Galaxy",
-    image: "/banners/tile-2.webp",
+    image: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245606/whitebox/banners/tile-2.webp",
     alt: "Phone Galaxy S10",
     title: "Phone Galaxy S10",
     category: "Cellphone & Tablets",
   },
   {
     href: "/shop?category=Wireless%20Earbuds",
-    image: "/banners/tile-3.webp",
+    image: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245606/whitebox/banners/tile-3.webp",
     alt: "Wireless Earbuds",
     title: "Wireless Earbuds",
     category: "Wireless Earbuds",
   },
   {
     href: "/shop?department=Home%20%26%20Furniture",
-    image: "/banners/tile-4.webp",
+    image: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245607/whitebox/banners/tile-4.webp",
     alt: "Executive Lounge Chair",
     title: "Executive Lounge Chair",
     category: "Decor & Furniture",

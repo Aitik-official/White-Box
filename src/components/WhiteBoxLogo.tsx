@@ -13,6 +13,10 @@ export default function WhiteBoxLogo({
   // Calculated width based on logo aspect ratio (694 / 219 ~= 3.16)
   const width = Math.round(height * 3.16);
 
+  const [logoSrc, setLogoSrc] = React.useState(
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245602/whitebox/brand/whitebox-logo.png"
+  );
+
   return (
     <div 
       style={{ 
@@ -23,10 +27,11 @@ export default function WhiteBoxLogo({
       }}
     >
       <Image 
-        src="/whitebox-logo.png" 
+        src={logoSrc} 
         alt="WHITE BOX Logo" 
         width={width}
         height={height}
+        onError={() => setLogoSrc("/whitebox-logo.png")}
         style={{
           height: "100%",
           width: "auto",

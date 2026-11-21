@@ -5,6 +5,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 interface CachedConnection {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;
+  failedBefore?: boolean;
 }
 
 declare global {
@@ -30,6 +31,8 @@ export async function connectDB() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
     };
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
       return mongooseInstance;
@@ -45,4 +48,3 @@ export async function connectDB() {
 
   return cached.conn;
 }
-

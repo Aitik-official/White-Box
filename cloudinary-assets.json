@@ -1,0 +1,33 @@
+{
+  "logo": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245602/whitebox/brand/whitebox-logo.png",
+  "hero": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245604/whitebox/banners/banner-hero.webp",
+  "tiles": [
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245604/whitebox/banners/tile-1.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245606/whitebox/banners/tile-2.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245606/whitebox/banners/tile-3.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245607/whitebox/banners/tile-4.webp"
+  ],
+  "products": {
+    "/products/product-1.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245609/whitebox/products/product-1.webp",
+    "/products/product-2.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245610/whitebox/products/product-2.webp",
+    "/products/product-3.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245612/whitebox/products/product-3.webp",
+    "/products/product-4.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245613/whitebox/products/product-4.webp",
+    "/products/product-5.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245614/whitebox/products/product-5.webp",
+    "/products/product-6.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245615/whitebox/products/product-6.webp",
+    "/products/product-7.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245616/whitebox/products/product-7.webp",
+    "/products/product-8.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245617/whitebox/products/product-8.webp",
+    "/products/product-9.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245617/whitebox/products/product-9.webp",
+    "/products/product-10.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245618/whitebox/products/product-10.webp",
+    "/products/product-11.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245619/whitebox/products/product-11.webp",
+    "/products/product-12.webp": "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245619/whitebox/products/product-12.webp"
+  },
+  "promos": [
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245620/whitebox/promos/ixcqakhdunyyhtuphdxv.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245621/whitebox/promos/aetwxl5hpkpgigrc8kfj.webp"
+  ],
+  "blogs": [
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245622/whitebox/blog/cbwulzafbpnnxhuacyjl.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245622/whitebox/blog/coa2bpzricbknqenxfzn.webp",
+    "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245623/whitebox/blog/tyhowbsomnh8x7omybl0.webp"
+  ]
+}
