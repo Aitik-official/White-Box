@@ -26,6 +26,37 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function CategoryGrid() {
+  const [liveCategories, setLiveCategories] = React.useState<any[]>([]);
+  const [loaded, setLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    async function loadLiveCategories() {
+      try {
+        const res = await fetch(`/api/categories?_t=${Date.now()}`, { cache: "no-store" });
+        const data = await res.json();
+        if (data.success && Array.isArray(data.categories) && data.categories.length > 0) {
+          const mapped = data.categories.slice(0, 8).map((c: any, i: number) => ({
+            name: c.name,
+            icon: c.icon || "Wrench",
+            count: `${c.subcategories?.length || 0} Subcategories`,
+            gradient: CATEGORIES[i % CATEGORIES.length]?.gradient || "linear-gradient(135deg, #0066ff 0%, #00b4d8 100%)",
+          }));
+          setLiveCategories(mapped);
+        } else {
+          setLiveCategories([]);
+        }
+      } catch (e) {
+        console.warn("Could not load categories in CategoryGrid:", e);
+        setLiveCategories([]);
+      } finally {
+        setLoaded(true);
+      }
+    }
+    loadLiveCategories();
+  }, []);
+
+  if (loaded && liveCategories.length === 0) return null;
+
   return (
     <section className="section-wrapper-modern" id="categories">
       <div className="container">
@@ -47,8 +78,8 @@ export default function CategoryGrid() {
         </div>
 
         <div className="category-modern-strip">
-          {CATEGORIES.map((cat, idx) => (
-            <Link key={idx} href={`/shop?category=${encodeURIComponent(cat.name)}`} className="category-modern-card">
+          {liveCategories.map((cat, idx) => (
+            <Link key={idx} href={`/shop?department=${encodeURIComponent(cat.name)}`} className="category-modern-card">
               <div 
                 className="category-icon-circle"
                 style={{ background: cat.gradient }}

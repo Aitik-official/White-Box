@@ -28,7 +28,16 @@ export default function DealsSection({ products }: DealsSectionProps) {
     return () => clearInterval(timer);
   }, []);
 
-  const dealProducts = products.filter((p) => p.oldPrice).concat(products.slice(0, 4)).slice(0, 4);
+  if (!products || products.length === 0) return null;
+
+  const dealProducts = Array.from(
+    new Map(
+      (products.filter((p) => p.oldPrice).length > 0
+        ? products.filter((p) => p.oldPrice)
+        : products
+      ).map((p) => [p.id || p.slug, p])
+    ).values()
+  ).slice(0, 4);
 
   return (
     <section className="section-wrapper-modern" id="flash-deals">

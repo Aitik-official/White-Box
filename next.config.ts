@@ -5,14 +5,15 @@ const nextConfig: NextConfig = {
     agentUpgrade: "security",
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "res.cloudinary.com",
+        hostname: "**",
       },
       {
-        protocol: "https",
-        hostname: "cdn11.bigcommerce.com",
+        protocol: "http",
+        hostname: "**",
       },
     ],
   },

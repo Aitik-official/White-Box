@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useMemo, Suspense } from "react";
+import React, { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ProductCard from "@/components/ProductCard";
-import { ALL_PRODUCTS, DEPARTMENTS_DATA, VENDORS } from "@/data/siteData";
+import { VENDORS } from "@/data/siteData";
 import { Filter, SlidersHorizontal, ArrowUpDown, Check, Star, RefreshCw } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
@@ -17,18 +17,65 @@ function ShopContent() {
   const initialCategory = searchParams.get("category") || "";
   const initialDepartment = searchParams.get("department") || "";
   const initialTag = searchParams.get("tag") || "";
+  const initialVendor = searchParams.get("vendor") || "";
 
   const [searchFilter, setSearchFilter] = useState(initialQuery);
   const [selectedDept, setSelectedDept] = useState(initialDepartment);
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
-  const [selectedVendors, setSelectedVendors] = useState<string[]>([]);
+  const [selectedVendors, setSelectedVendors] = useState<string[]>(
+    initialVendor ? [initialVendor] : []
+  );
   const [minRating, setMinRating] = useState<number>(0);
   const [sortBy, setSortBy] = useState<"featured" | "price-low" | "price-high" | "rating">("featured");
   const [maxPrice, setMaxPrice] = useState<number>(50000);
+  const [productsList, setProductsList] = useState<any[]>([]);
+  const [categoriesList, setCategoriesList] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Keep filters in sync when URL query params change (e.g. WhiteBox Guarantee link)
+  useEffect(() => {
+    setSearchFilter(searchParams.get("q") || "");
+    setSelectedDept(searchParams.get("department") || "");
+    setSelectedCategory(searchParams.get("category") || "");
+    const vendor = searchParams.get("vendor") || "";
+    setSelectedVendors(vendor ? [vendor] : []);
+  }, [searchParams]);
+
+  // Sync live products & categories from MongoDB
+  useEffect(() => {
+    async function loadLiveData() {
+      try {
+        const timestamp = Date.now();
+        const [pRes, cRes] = await Promise.all([
+          fetch(`/api/products?_t=${timestamp}`, { cache: "no-store" }).then((r) => r.json()).catch(() => ({})),
+          fetch(`/api/categories?_t=${timestamp}`, { cache: "no-store" }).then((r) => r.json()).catch(() => ({})),
+        ]);
+        if (pRes.success && Array.isArray(pRes.products)) {
+          setProductsList(pRes.products);
+        } else if (Array.isArray(pRes.products)) {
+          setProductsList(pRes.products);
+        } else {
+          setProductsList([]);
+        }
+        if (cRes.success && Array.isArray(cRes.categories)) {
+          setCategoriesList(cRes.categories);
+        } else if (Array.isArray(cRes.categories)) {
+          setCategoriesList(cRes.categories);
+        } else {
+          setCategoriesList([]);
+        }
+      } catch (e) {
+        console.warn("Failed to fetch live shop data:", e);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadLiveData();
+  }, []);
 
   // Filter & Sort Logic
   const filteredProducts = useMemo(() => {
-    return ALL_PRODUCTS.filter((p) => {
+    return productsList.filter((p) => {
       // Search term
       if (searchFilter.trim()) {
         const q = searchFilter.toLowerCase();
@@ -42,10 +89,10 @@ function ShopContent() {
       }
 
       // Department filter
-      if (selectedDept && p.department !== selectedDept) return false;
+      if (selectedDept && p.department !== selectedDept && p.mainCategory !== selectedDept) return false;
 
       // Category filter
-      if (selectedCategory && p.category !== selectedCategory) return false;
+      if (selectedCategory && p.category !== selectedCategory && p.miniCategory !== selectedCategory) return false;
 
       // Tag filter
       if (initialTag && p.tag !== initialTag) return false;
@@ -64,9 +111,9 @@ function ShopContent() {
       if (sortBy === "price-low") return a.rawPrice - b.rawPrice;
       if (sortBy === "price-high") return b.rawPrice - a.rawPrice;
       if (sortBy === "rating") return b.rating - a.rating;
-      return a.id - b.id; // featured default
+      return (a.id || 0) - (b.id || 0); // featured default
     });
-  }, [searchFilter, selectedDept, selectedCategory, initialTag, selectedVendors, minRating, sortBy, maxPrice]);
+  }, [productsList, searchFilter, selectedDept, selectedCategory, initialTag, selectedVendors, minRating, sortBy, maxPrice]);
 
   const toggleVendor = (vendorName: string) => {
     setSelectedVendors(prev => 
@@ -152,30 +199,72 @@ function ShopContent() {
                     color: !selectedDept ? "#0066ff" : "#475569"
                   }}
                 >
-                  All Departments ({ALL_PRODUCTS.length})
+                  All Departments ({productsList.length})
                 </button>
-                {DEPARTMENTS_DATA.map((d) => {
-                  const count = ALL_PRODUCTS.filter(p => p.department === d.name).length;
+                {categoriesList.map((d) => {
+                  const count = productsList.filter(p => (p.department === d.name || p.mainCategory === d.name)).length;
                   const isSelected = selectedDept === d.name;
                   return (
-                    <button
-                      key={d.slug}
-                      onClick={() => { setSelectedDept(d.name); setSelectedCategory(""); }}
-                      style={{
-                        textAlign: "left",
-                        padding: "7px 10px",
-                        borderRadius: "6px",
-                        fontSize: "13px",
-                        fontWeight: isSelected ? 800 : 500,
-                        background: isSelected ? "#e0f2fe" : "transparent",
-                        color: isSelected ? "#0066ff" : "#475569",
-                        display: "flex",
-                        justifyContent: "space-between"
-                      }}
-                    >
-                      <span>{d.name}</span>
-                      <span style={{ fontSize: "11px", opacity: 0.7 }}>({count})</span>
-                    </button>
+                    <div key={d._id || d.slug}>
+                      <button
+                        onClick={() => { setSelectedDept(d.name); setSelectedCategory(""); }}
+                        style={{
+                          textAlign: "left",
+                          padding: "7px 10px",
+                          borderRadius: "6px",
+                          fontSize: "13px",
+                          fontWeight: isSelected ? 800 : 500,
+                          background: isSelected ? "#e0f2fe" : "transparent",
+                          color: isSelected ? "#0066ff" : "#475569",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%"
+                        }}
+                      >
+                        <span>{d.name}</span>
+                        <span style={{ fontSize: "11px", opacity: 0.7 }}>({count})</span>
+                      </button>
+
+                      {/* Subcategories (Mini Categories) under active selected department */}
+                      {isSelected && d.subcategories && d.subcategories.length > 0 && (
+                        <div style={{ marginLeft: "12px", paddingLeft: "10px", borderLeft: "2px solid #0066ff", marginTop: "4px", marginBottom: "6px", display: "flex", flexDirection: "column", gap: "2px" }}>
+                          <button
+                            onClick={() => setSelectedCategory("")}
+                            style={{
+                              textAlign: "left",
+                              padding: "4px 6px",
+                              borderRadius: "4px",
+                              fontSize: "12px",
+                              fontWeight: !selectedCategory ? 800 : 500,
+                              color: !selectedCategory ? "#0066ff" : "#64748b",
+                              background: !selectedCategory ? "rgba(0,102,255,0.06)" : "transparent"
+                            }}
+                          >
+                            All {d.name}
+                          </button>
+                          {d.subcategories.map((sub: string, subIdx: number) => {
+                            const isCatSelected = selectedCategory === sub;
+                            return (
+                              <button
+                                key={subIdx}
+                                onClick={() => setSelectedCategory(sub)}
+                                style={{
+                                  textAlign: "left",
+                                  padding: "4px 6px",
+                                  borderRadius: "4px",
+                                  fontSize: "12px",
+                                  fontWeight: isCatSelected ? 800 : 500,
+                                  color: isCatSelected ? "#0066ff" : "#64748b",
+                                  background: isCatSelected ? "rgba(0,102,255,0.08)" : "transparent"
+                                }}
+                              >
+                                • {sub}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </div>
@@ -313,7 +402,22 @@ function ShopContent() {
             </div>
 
             {/* Products Grid */}
-            {filteredProducts.length === 0 ? (
+            {isLoading ? (
+              <div 
+                style={{
+                  background: "#ffffff",
+                  borderRadius: "16px",
+                  padding: "60px 20px",
+                  textAlign: "center",
+                  border: "1px solid #e2e8f0"
+                }}
+              >
+                <RefreshCw size={36} className="animate-spin" color="#0066ff" style={{ margin: "0 auto 16px" }} />
+                <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a" }}>
+                  Loading Products from Database...
+                </h3>
+              </div>
+            ) : filteredProducts.length === 0 ? (
               <div 
                 style={{
                   background: "#ffffff",

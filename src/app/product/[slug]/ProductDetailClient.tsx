@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ProductCard from "@/components/ProductCard";
-import { Product, ALL_PRODUCTS } from "@/data/siteData";
+import { Product } from "@/data/siteData";
 import { useCart } from "@/context/CartContext";
 import { 
   Star, 
@@ -27,19 +27,24 @@ import {
   Sparkles
 } from "lucide-react";
 
-export default function ProductDetailClient({ product }: { product: Product }) {
+export default function ProductDetailClient({ 
+  product, 
+  relatedProducts = [] 
+}: { 
+  product: Product; 
+  relatedProducts?: Product[];
+}) {
   const router = useRouter();
   const { addToCart, toggleWishlist, wishlist, toast } = useCart();
-  const [selectedImg, setSelectedImg] = useState(product.img);
+  const validImages = [product.img, ...(product.gallery || [])]
+    .filter((url): url is string => Boolean(url && typeof url === "string" && url.trim().length > 0))
+    .filter((v, i, a) => a.indexOf(v) === i);
+  const [selectedImg, setSelectedImg] = useState(validImages[0] || product.img || "");
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
   const [activeTab, setActiveTab] = useState<"desc" | "specs" | "reviews">("desc");
 
   const isFavorite = wishlist.includes(product.id);
-
-  const galleryImages = [product.img, ...(product.gallery || [])].filter((v, i, a) => a.indexOf(v) === i);
-
-  const relatedProducts = ALL_PRODUCTS.filter(p => p.id !== product.id && p.department === product.department).slice(0, 4);
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
@@ -119,13 +124,21 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 overflow: "hidden"
               }}
             >
-              <Image 
-                src={selectedImg} 
-                alt={product.title} 
-                fill 
-                style={{ objectFit: "contain", padding: "16px" }}
-                priority
-              />
+              {selectedImg ? (
+                <Image 
+                  src={selectedImg} 
+                  alt={product.title} 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, 500px"
+                  style={{ objectFit: "contain", padding: "16px" }}
+                  priority
+                />
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#94a3b8" }}>
+                  <ShoppingBag size={48} color="#cbd5e1" />
+                  <span style={{ fontSize: "13px", marginTop: "8px", fontWeight: 600 }}>No Image Available</span>
+                </div>
+              )}
               {product.tag && (
                 <span 
                   className="product-tag-badge"
@@ -137,26 +150,28 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             </div>
 
             {/* Thumbnail Selectors */}
-            <div style={{ display: "flex", gap: "10px" }}>
-              {galleryImages.map((imgUrl, i) => (
-                <div 
-                  key={i}
-                  onClick={() => setSelectedImg(imgUrl)}
-                  style={{
-                    width: "70px",
-                    height: "70px",
-                    borderRadius: "10px",
-                    border: selectedImg === imgUrl ? "2px solid #0066ff" : "1px solid #cbd5e1",
-                    padding: "4px",
-                    cursor: "pointer",
-                    position: "relative",
-                    background: "#f8fafc"
-                  }}
-                >
-                  <Image src={imgUrl} alt="Thumbnail" fill style={{ objectFit: "contain", padding: "4px" }} />
-                </div>
-              ))}
-            </div>
+            {validImages.length > 1 && (
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                {validImages.map((imgUrl, i) => (
+                  <div 
+                    key={i}
+                    onClick={() => setSelectedImg(imgUrl)}
+                    style={{
+                      width: "70px",
+                      height: "70px",
+                      borderRadius: "10px",
+                      border: selectedImg === imgUrl ? "2px solid #0066ff" : "1px solid #cbd5e1",
+                      padding: "4px",
+                      cursor: "pointer",
+                      position: "relative",
+                      background: "#f8fafc"
+                    }}
+                  >
+                    <Image src={imgUrl} alt="Thumbnail" fill sizes="70px" style={{ objectFit: "contain", padding: "4px" }} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Column 2: Product Specifications & Details */}

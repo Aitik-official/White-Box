@@ -52,13 +52,20 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Thumbnail */}
       <div className="product-modern-thumb">
-        <Image 
-          src={product.img} 
-          alt={product.title} 
-          width={180} 
-          height={180}
-          className="product-modern-img"
-        />
+        {product.img ? (
+          <Image 
+            src={product.img} 
+            alt={product.title} 
+            width={180} 
+            height={180}
+            className="product-modern-img"
+          />
+        ) : (
+          <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#f8fafc", color: "#94a3b8" }}>
+            <ShoppingBag size={36} color="#cbd5e1" />
+            <span style={{ fontSize: "11px", marginTop: "6px", fontWeight: 600 }}>No Image</span>
+          </div>
+        )}
 
         <div className="modern-hover-actions">
           <button 

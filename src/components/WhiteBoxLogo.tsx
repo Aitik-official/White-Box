@@ -33,8 +33,9 @@ export default function WhiteBoxLogo({
         height={height}
         onError={() => setLogoSrc("/whitebox-logo.png")}
         style={{
-          height: "100%",
           width: "auto",
+          height: "auto",
+          maxHeight: `${height}px`,
           objectFit: "contain",
           display: "block"
         }}

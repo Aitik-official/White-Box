@@ -8,6 +8,8 @@ export interface ISiteSettingsDoc extends Document {
   bannerNotice: string;
   supportPhone: string;
   dealsTimerHours: number;
+  isProductsSeeded?: boolean;
+  isCategoriesSeeded?: boolean;
 }
 
 const SiteSettingsSchema = new Schema<ISiteSettingsDoc>(
@@ -19,6 +21,8 @@ const SiteSettingsSchema = new Schema<ISiteSettingsDoc>(
     bannerNotice: { type: String, default: "100% Buyer Protection & Genuine Warranty" },
     supportPhone: { type: String, default: "06-900-6789-00" },
     dealsTimerHours: { type: Number, default: 24 },
+    isProductsSeeded: { type: Boolean, default: false },
+    isCategoriesSeeded: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

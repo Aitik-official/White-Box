@@ -58,6 +58,7 @@ export default function HeroSection() {
               src="/banners/banner-hero.webp"
               alt="Gaming Headset"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
               style={{ objectFit: "cover", objectPosition: "center" }}
               priority
             />
@@ -130,6 +131,7 @@ export default function HeroSection() {
                   src={tile.image}
                   alt={tile.alt}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
                   style={{ objectFit: "cover", objectPosition: "center" }}
                 />
                 {/* Bottom gradient for text */}

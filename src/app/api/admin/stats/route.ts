@@ -4,6 +4,9 @@ import Product from "@/models/Product";
 import Order from "@/models/Order";
 import User from "@/models/User";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET() {
   try {
     await connectDB();
@@ -18,16 +21,25 @@ export async function GET() {
     const allOrders = await Order.find({}, { total: 1 }).lean();
     const totalRevenue = allOrders.reduce((sum, o) => sum + (o.total || 0), 0);
 
-    return NextResponse.json({
-      success: true,
-      stats: {
-        totalProducts,
-        totalOrders,
-        totalUsers,
-        totalRevenue,
+    return NextResponse.json(
+      {
+        success: true,
+        stats: {
+          totalProducts,
+          totalOrders,
+          totalUsers,
+          totalRevenue,
+        },
+        recentOrders,
       },
-      recentOrders,
-    });
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      }
+    );
   } catch (err: unknown) {
     console.error("Dashboard Stats error:", err);
     return NextResponse.json({ error: "Failed to load stats" }, { status: 500 });

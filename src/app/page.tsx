@@ -10,16 +10,55 @@ import PromoBannerStrips from "@/components/PromoBannerStrips";
 import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
-import { PRODUCTS, PROMO_STRIPS } from "@/data/siteData";
+import { PROMO_STRIPS } from "@/data/siteData";
 import { useCart } from "@/context/CartContext";
 
 export default function Home() {
   const { toast } = useCart();
+  const [liveProducts, setLiveProducts] = React.useState<any[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  // Split products for multiple categorized sliders matching wb-duka2
-  const topSelling = PRODUCTS.slice(0, 7);
-  const hotTrending = PRODUCTS.slice(2, 9);
-  const topFeatured = PRODUCTS.slice(4, 12);
+  React.useEffect(() => {
+    async function loadLiveProducts() {
+      try {
+        const res = await fetch(`/api/products?_t=${Date.now()}`, { cache: "no-store" });
+        const data = await res.json();
+        if (data.success && Array.isArray(data.products)) {
+          setLiveProducts(data.products);
+        } else if (Array.isArray(data.products)) {
+          setLiveProducts(data.products);
+        }
+      } catch (e) {
+        console.warn("Could not load live products on home:", e);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadLiveProducts();
+  }, []);
+
+  // Filter products for homepage sections based on admin selector box choice
+  const isHiddenFromHome = (p: any) =>
+    p.homeSection === "none" ||
+    (Array.isArray(p.homeSections) && p.homeSections.length === 0 && p.homeSection === "none");
+
+  const isOnAllSections = (p: any) =>
+    !p.homeSection ||
+    p.homeSection === "all" ||
+    (Array.isArray(p.homeSections) && (p.homeSections.includes("all") || p.homeSections.length === 0));
+
+  const isOnSection = (p: any, section: string) => {
+    if (isHiddenFromHome(p)) return false;
+    if (p.homeSection === section) return true;
+    if (Array.isArray(p.homeSections) && p.homeSections.includes(section)) return true;
+    if (isOnAllSections(p)) return true;
+    return false;
+  };
+
+  const topSelling = liveProducts.filter((p) => isOnSection(p, "top-selling"));
+  const flashDeals = liveProducts.filter((p) => isOnSection(p, "flash-deals"));
+  const hotTrending = liveProducts.filter((p) => isOnSection(p, "hot-trending"));
+  const topFeatured = liveProducts.filter((p) => isOnSection(p, "top-featured"));
 
   return (
     <div className="wb-container">
@@ -53,7 +92,7 @@ export default function Home() {
         <CategoryGrid />
 
         {/* Section 3: Flash Deals with Live Countdown */}
-        <DealsSection products={PRODUCTS} />
+        <DealsSection products={flashDeals.length > 0 ? flashDeals : liveProducts} />
 
         {/* Section 4: Promo Banner Strips */}
         <PromoBannerStrips banners={PROMO_STRIPS} />

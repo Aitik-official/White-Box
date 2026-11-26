@@ -88,8 +88,12 @@ export default function CartPage() {
                       borderBottom: "1px solid #f8fafc"
                     }}
                   >
-                    <div style={{ width: "90px", height: "90px", position: "relative", flexShrink: 0, borderRadius: "10px", border: "1px solid #e2e8f0", background: "#f8fafc" }}>
-                      <Image src={item.product.img} alt={item.product.title} fill style={{ objectFit: "contain", padding: "6px" }} />
+                    <div style={{ width: "90px", height: "90px", position: "relative", flexShrink: 0, borderRadius: "10px", border: "1px solid #e2e8f0", background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      {item.product.img ? (
+                        <Image src={item.product.img} alt={item.product.title} fill sizes="90px" style={{ objectFit: "contain", padding: "6px" }} />
+                      ) : (
+                        <ShoppingBag size={28} color="#94a3b8" />
+                      )}
                     </div>
 
                     <div style={{ flex: 1 }}>

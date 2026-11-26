@@ -8,12 +8,23 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/context/CartContext";
-import { ALL_PRODUCTS } from "@/data/siteData";
 
 export default function WishlistPage() {
   const { wishlist, toggleWishlist, toast, addToCart } = useCart();
+  const [allProducts, setAllProducts] = React.useState<any[]>([]);
 
-  const wishlistedProducts = ALL_PRODUCTS.filter((p) => wishlist.includes(p.id));
+  React.useEffect(() => {
+    fetch(`/api/products?_t=${Date.now()}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.products)) {
+          setAllProducts(data.products);
+        }
+      })
+      .catch((e) => console.warn("Wishlist load error:", e));
+  }, []);
+
+  const wishlistedProducts = allProducts.filter((p) => wishlist.includes(p.id) || wishlist.includes(p._id));
 
   return (
     <div className="wb-container">

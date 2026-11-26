@@ -20,11 +20,17 @@ import {
   Scissors,
   Check,
   ShieldCheck,
-  Sparkles
+  Sparkles,
+  Laptop,
+  Tv,
+  Headphones,
+  Camera,
+  Shirt,
+  Layers,
+  Package
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import WhiteBoxLogo from "./WhiteBoxLogo";
-import { DEPARTMENTS_DATA, ALL_PRODUCTS } from "@/data/siteData";
 
 const iconMap: Record<string, React.ReactNode> = {
   Smartphone: <Smartphone size={16} />,
@@ -34,21 +40,68 @@ const iconMap: Record<string, React.ReactNode> = {
   Armchair: <Armchair size={16} />,
   Watch: <Watch size={16} />,
   Scissors: <Scissors size={16} />,
+  Laptop: <Laptop size={16} />,
+  Tv: <Tv size={16} />,
+  Headphones: <Headphones size={16} />,
+  Camera: <Camera size={16} />,
+  Shirt: <Shirt size={16} />,
+  Layers: <Layers size={16} />,
+  ShoppingBag: <ShoppingBag size={16} />,
+  Sparkles: <Sparkles size={16} />,
+  Package: <Package size={16} />,
 };
 
-// Alphabetically sorted departments
-const SORTED_DEPARTMENTS = [...DEPARTMENTS_DATA].sort((a, b) => a.name.localeCompare(b.name));
+// Helper to sort main categories and their subcategories alphabetically (A-Z)
+const sortCategoriesAZ = (cats: any[]) => {
+  return [...cats]
+    .map((cat: any) => ({
+      ...cat,
+      subcategories: Array.isArray(cat.subcategories)
+        ? [...cat.subcategories].sort((a: string, b: string) =>
+            a.localeCompare(b, undefined, { sensitivity: "base" })
+          )
+        : [],
+    }))
+    .sort((a: any, b: any) =>
+      (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: "base" })
+    );
+};
 
 export default function Header() {
   const router = useRouter();
   const { totalItems, subtotal, formatINR, setIsCartOpen, wishlist } = useCart();
+  const [categories, setCategories] = useState<any[]>([]);
   const [deptOpen, setDeptOpen] = useState(false);
-  const [hoveredDept, setHoveredDept] = useState<string | null>(SORTED_DEPARTMENTS[0].slug);
+  const [hoveredDept, setHoveredDept] = useState<string | null>("");
+  const [openNavCat, setOpenNavCat] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchSuggestions, setSearchSuggestions] = useState<typeof ALL_PRODUCTS>([]);
+  const [searchSuggestions, setSearchSuggestions] = useState<any[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const navCatsRef = useRef<HTMLElement>(null);
+
+  // Fetch live categories from MongoDB backend API (Sorted A-Z)
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const res = await fetch(`/api/categories?_t=${Date.now()}`, { cache: "no-store" });
+        const data = await res.json();
+        if (data.success && Array.isArray(data.categories)) {
+          const sorted = sortCategoriesAZ(data.categories);
+          setCategories(sorted);
+          if (sorted.length > 0) {
+            if (!hoveredDept || !sorted.some((c: any) => c.slug === hoveredDept)) {
+              setHoveredDept(sorted[0].slug);
+            }
+          }
+        }
+      } catch (e) {
+        console.warn("Could not load categories in header:", e);
+      }
+    }
+    loadCategories();
+  }, []);
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -59,27 +112,40 @@ export default function Header() {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
         setShowSuggestions(false);
       }
+      if (navCatsRef.current && !navCatsRef.current.contains(e.target as Node)) {
+        setOpenNavCat(null);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Live auto-complete search as user types
+  // Live auto-complete search from live database API
   useEffect(() => {
+    let active = true;
     if (searchQuery.trim().length > 1) {
-      const q = searchQuery.toLowerCase();
-      const matches = ALL_PRODUCTS.filter(p => 
-        p.title.toLowerCase().includes(q) || 
-        p.brand.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q) ||
-        p.department.toLowerCase().includes(q)
-      ).slice(0, 5);
-      setSearchSuggestions(matches);
-      setShowSuggestions(true);
+      fetch(`/api/products?q=${encodeURIComponent(searchQuery.trim())}&_t=${Date.now()}`, { cache: "no-store" })
+        .then((r) => r.json())
+        .then((data) => {
+          if (!active) return;
+          if (data.success && Array.isArray(data.products)) {
+            setSearchSuggestions(data.products.slice(0, 5));
+            setShowSuggestions(data.products.length > 0);
+          } else {
+            setSearchSuggestions([]);
+            setShowSuggestions(false);
+          }
+        })
+        .catch(() => {
+          if (!active) return;
+          setSearchSuggestions([]);
+          setShowSuggestions(false);
+        });
     } else {
       setSearchSuggestions([]);
       setShowSuggestions(false);
     }
+    return () => { active = false; };
   }, [searchQuery]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -92,7 +158,7 @@ export default function Header() {
     }
   };
 
-  const activeDepartment = SORTED_DEPARTMENTS.find(d => d.slug === hoveredDept) || SORTED_DEPARTMENTS[0];
+  const activeDepartment = categories.find((d: any) => d.slug === hoveredDept) || categories[0] || null;
 
   return (
     <header className="site-header">
@@ -110,10 +176,6 @@ export default function Header() {
             </div>
 
             <div className="header-top-right">
-              <Link href="/admin" className="header-top-link" style={{ color: "var(--wb-cyan)" }}>
-                <span>Admin Panel</span>
-              </Link>
-
               <div className="header-top-link">
                 <span>My Account</span>
                 <ChevronDown size={12} />
@@ -198,7 +260,13 @@ export default function Header() {
                       onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
                       onMouseLeave={(e) => (e.currentTarget.style.background = "#ffffff")}
                     >
-                      <img src={prod.img} alt={prod.title} style={{ width: "38px", height: "38px", objectFit: "contain", borderRadius: "6px" }} />
+                      {prod.img ? (
+                        <img src={prod.img} alt={prod.title} style={{ width: "38px", height: "38px", objectFit: "contain", borderRadius: "6px" }} />
+                      ) : (
+                        <div style={{ width: "38px", height: "38px", borderRadius: "6px", background: "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <ShoppingBag size={18} color="#94a3b8" />
+                        </div>
+                      )}
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: "13px", fontWeight: 700, color: "#0f172a" }}>{prod.title}</div>
                         <div style={{ fontSize: "11px", color: "#64748b" }}>in {prod.category} • by <strong style={{ color: "#0066ff" }}>{prod.vendor}</strong></div>
@@ -309,16 +377,16 @@ export default function Header() {
                     animation: "fadeInDown 0.2s ease"
                   }}
                 >
-                  {/* Left Column: Sorted Main Departments */}
-                  <div style={{ background: "#f8fafc", borderRight: "1px solid #e2e8f0", padding: "10px 0" }}>
+                  {/* Left Column: Sorted Main Categories */}
+                  <div style={{ background: "#f8fafc", borderRight: "1px solid #e2e8f0", padding: "10px 0", maxHeight: "420px", overflowY: "auto" }}>
                     <div style={{ padding: "8px 18px", fontSize: "11px", fontWeight: 800, color: "#64748b", textTransform: "uppercase" }}>
-                      Shop By Department (Sorted)
+                      Main Categories ({categories.length})
                     </div>
-                    {SORTED_DEPARTMENTS.map((dept) => {
+                    {categories.map((dept: any) => {
                       const isHovered = (hoveredDept === dept.slug);
                       return (
                         <div 
-                          key={dept.slug}
+                          key={dept._id || dept.slug}
                           onMouseEnter={() => setHoveredDept(dept.slug)}
                           onClick={() => {
                             setDeptOpen(false);
@@ -348,97 +416,223 @@ export default function Header() {
                     })}
                   </div>
 
-                  {/* Right Column: Subcategories & Browse Link */}
+                  {/* Right Column: Mini Categories (Subcategories) & Browse Link */}
                   <div style={{ padding: "24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                     <div>
                       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px", paddingBottom: "12px", borderBottom: "1px solid #f1f5f9" }}>
                         <div style={{ width: "36px", height: "36px", borderRadius: "8px", background: "rgba(0, 102, 255, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#0066ff" }}>
-                          {iconMap[activeDepartment.icon]}
+                          {iconMap[activeDepartment?.icon] || <Wrench size={16} />}
                         </div>
                         <div>
-                          <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#0f172a" }}>{activeDepartment.name}</h4>
-                          <span style={{ fontSize: "11px", color: "#64748b" }}>Select a category to browse catalog</span>
+                          <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#0f172a" }}>{activeDepartment?.name}</h4>
+                          <span style={{ fontSize: "11px", color: "#64748b" }}>
+                            {(activeDepartment?.subcategories || []).length} Mini Categories available
+                          </span>
                         </div>
                       </div>
 
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                        {activeDepartment.subcategories.map((sub, i) => (
-                          <Link
-                            key={i}
-                            href={`/shop?category=${encodeURIComponent(sub)}`}
-                            onClick={() => setDeptOpen(false)}
-                            style={{
-                              padding: "8px 12px",
-                              borderRadius: "6px",
-                              fontSize: "13px",
-                              color: "#334155",
-                              fontWeight: 500,
-                              background: "#f8fafc",
-                              transition: "all 0.2s"
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.background = "#e0f2fe";
-                              e.currentTarget.style.color = "#0066ff";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.background = "#f8fafc";
-                              e.currentTarget.style.color = "#334155";
-                            }}
-                          >
-                            • {sub}
-                          </Link>
-                        ))}
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", maxHeight: "250px", overflowY: "auto" }}>
+                        {(activeDepartment?.subcategories || []).length === 0 ? (
+                          <div style={{ fontSize: "13px", color: "#64748b", gridColumn: "1 / -1", padding: "10px 0" }}>
+                            <p style={{ marginBottom: "10px" }}>Browse all products directly in this category:</p>
+                            <Link
+                              href={`/shop?department=${encodeURIComponent(activeDepartment?.name || "")}`}
+                              onClick={() => setDeptOpen(false)}
+                              style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "6px",
+                                padding: "8px 16px",
+                                borderRadius: "8px",
+                                background: "#0066ff",
+                                color: "#ffffff",
+                                fontSize: "12px",
+                                fontWeight: 700
+                              }}
+                            >
+                              Browse {activeDepartment?.name} Products →
+                            </Link>
+                          </div>
+                        ) : (
+                          (activeDepartment?.subcategories || []).map((sub: string, i: number) => (
+                            <Link
+                              key={i}
+                              href={`/shop?category=${encodeURIComponent(sub)}`}
+                              onClick={() => setDeptOpen(false)}
+                              style={{
+                                padding: "8px 12px",
+                                borderRadius: "6px",
+                                fontSize: "13px",
+                                color: "#334155",
+                                fontWeight: 500,
+                                background: "#f8fafc",
+                                transition: "all 0.2s"
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = "#e0f2fe";
+                                e.currentTarget.style.color = "#0066ff";
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = "#f8fafc";
+                                e.currentTarget.style.color = "#334155";
+                              }}
+                            >
+                              • {sub}
+                            </Link>
+                          ))
+                        )}
                       </div>
                     </div>
 
-                    <div style={{ marginTop: "24px", paddingTop: "14px", borderTop: "1px solid #f1f5f9", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <span style={{ fontSize: "12px", color: "#64748b" }}>All items with 100% WhiteBox Guarantee</span>
+                    <div style={{ marginTop: "24px", paddingTop: "14px", borderTop: "1px solid #f1f5f9", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
                       <Link
-                        href={`/shop?department=${encodeURIComponent(activeDepartment.name)}`}
+                        href="/shop?vendor=WhiteBox%20Official"
                         onClick={() => setDeptOpen(false)}
-                        style={{
-                          fontSize: "13px",
-                          fontWeight: 700,
-                          color: "#0066ff",
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "4px"
-                        }}
+                        style={{ fontSize: "12px", color: "#0066ff", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: "3px" }}
                       >
-                        Explore All {activeDepartment.name} →
+                        All items with 100% WhiteBox Guarantee →
                       </Link>
+                      {activeDepartment && (
+                        <Link
+                          href={`/shop?department=${encodeURIComponent(activeDepartment.name)}`}
+                          onClick={() => setDeptOpen(false)}
+                          style={{
+                            fontSize: "13px",
+                            fontWeight: 700,
+                            color: "#0066ff",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "4px"
+                          }}
+                        >
+                          Explore All {activeDepartment.name} →
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Main Navigation Links */}
-            <nav className="nav-links-modern">
+            {/* Main Navigation Links — main categories; mini categories in dropdown */}
+            <nav className="nav-links-modern" ref={navCatsRef}>
               <div className="nav-item-modern">
                 <Link href="/">Home</Link>
               </div>
               <div className="nav-item-modern">
-                <Link href="/shop" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                  <Sparkles size={14} color="#ff7043" />
-                  All Products
-                </Link>
-              </div>
-              <div className="nav-item-modern">
                 <Link href="/shop?tag=HOT">Flash Deals</Link>
               </div>
-              <div className="nav-item-modern">
-                <Link href="/shop?department=Electronics%20%26%20Gadgets">Electronics</Link>
-              </div>
-              <div className="nav-item-modern">
-                <Link href="/shop?department=Power%20%26%20Hand%20Tools">Tools & Workshop</Link>
-              </div>
-              <div className="nav-item-modern">
-                <Link href="/wishlist">Wishlist ({wishlist.length})</Link>
-              </div>
-              <div className="nav-item-modern">
-                <Link href="/cart">My Cart ({totalItems})</Link>
-              </div>
+              {categories.map((cat: any) => {
+                const catKey = cat._id || cat.slug || cat.name;
+                const minis: string[] = Array.isArray(cat.subcategories) ? cat.subcategories : [];
+                const hasMinis = minis.length > 0;
+                const isOpen = openNavCat === catKey;
+
+                return (
+                  <div
+                    key={catKey}
+                    className="nav-item-modern"
+                    style={{ position: "relative" }}
+                    onMouseEnter={() => hasMinis && setOpenNavCat(catKey)}
+                    onMouseLeave={() => setOpenNavCat(null)}
+                  >
+                    {hasMinis ? (
+                      <button
+                        type="button"
+                        onClick={() => setOpenNavCat(isOpen ? null : catKey)}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "4px",
+                          background: "transparent",
+                          border: "none",
+                          color: isOpen ? "var(--header-accent-cyan)" : "#ffffff",
+                          fontSize: "12px",
+                          fontWeight: 800,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.3px",
+                          padding: "6px 0",
+                          cursor: "pointer",
+                          whiteSpace: "nowrap",
+                          lineHeight: 1.2,
+                        }}
+                      >
+                        {cat.name}
+                        <ChevronDown size={12} style={{ transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.15s" }} />
+                      </button>
+                    ) : (
+                      <Link href={`/shop?department=${encodeURIComponent(cat.name)}`}>
+                        {cat.name}
+                      </Link>
+                    )}
+
+                    {hasMinis && isOpen && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "100%",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          minWidth: "200px",
+                          background: "#ffffff",
+                          borderRadius: "10px",
+                          boxShadow: "0 12px 32px rgba(15, 23, 42, 0.18)",
+                          border: "1px solid #e2e8f0",
+                          padding: "8px",
+                          zIndex: 120,
+                          marginTop: "0",
+                          paddingTop: "10px",
+                        }}
+                      >
+                        <Link
+                          href={`/shop?department=${encodeURIComponent(cat.name)}`}
+                          onClick={() => setOpenNavCat(null)}
+                          style={{
+                            display: "block",
+                            padding: "8px 12px",
+                            borderRadius: "6px",
+                            fontSize: "12px",
+                            fontWeight: 800,
+                            color: "#0066ff",
+                            textTransform: "none",
+                            letterSpacing: 0,
+                            marginBottom: "4px",
+                          }}
+                        >
+                          All {cat.name}
+                        </Link>
+                        {minis.map((mini) => (
+                          <Link
+                            key={mini}
+                            href={`/shop?category=${encodeURIComponent(mini)}`}
+                            onClick={() => setOpenNavCat(null)}
+                            style={{
+                              display: "block",
+                              padding: "8px 12px",
+                              borderRadius: "6px",
+                              fontSize: "13px",
+                              fontWeight: 600,
+                              color: "#334155",
+                              textTransform: "none",
+                              letterSpacing: 0,
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = "#e0f2fe";
+                              e.currentTarget.style.color = "#0066ff";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = "transparent";
+                              e.currentTarget.style.color = "#334155";
+                            }}
+                          >
+                            {mini}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </nav>
           </div>
         </div>

@@ -15,6 +15,8 @@ export interface IProductDoc extends Document {
   vendorRating: number;
   category: string;
   department: string;
+  mainCategory?: string;
+  miniCategory?: string;
   description: string;
   features: string[];
   specs: Record<string, string>;
@@ -24,6 +26,8 @@ export interface IProductDoc extends Document {
   stockCount: number;
   tag?: string;
   tagColor?: string;
+  homeSection?: string;
+  homeSections?: string[];
 }
 
 const ProductSchema = new Schema<IProductDoc>(
@@ -42,6 +46,14 @@ const ProductSchema = new Schema<IProductDoc>(
     vendorRating: { type: Number, default: 4.8 },
     category: { type: String, required: true, index: true },
     department: { type: String, required: true, index: true },
+    mainCategory: { type: String, index: true },
+    miniCategory: { type: String, index: true },
+    homeSection: { type: String, default: "all", index: true },
+    homeSections: {
+      type: [String],
+      default: ["top-selling", "flash-deals", "hot-trending", "top-featured"],
+      index: true,
+    },
     description: { type: String, required: true },
     features: { type: [String], default: [] },
     specs: { type: Map, of: String, default: {} },

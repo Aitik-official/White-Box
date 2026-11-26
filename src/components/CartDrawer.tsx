@@ -75,13 +75,19 @@ export default function CartDrawer() {
           ) : (
             cart.map((item) => (
               <div key={item.product.id} style={{ display: "flex", gap: "14px", padding: "14px 0", borderBottom: "1px solid #f1f5f9" }}>
-                <Image 
-                  src={item.product.img} 
-                  alt={item.product.title} 
-                  width={64} 
-                  height={64}
-                  style={{ objectFit: "contain", border: "1px solid #e2e8f0", borderRadius: "8px", padding: "4px", background: "#f8fafc" }}
-                />
+                {item.product.img ? (
+                  <Image 
+                    src={item.product.img} 
+                    alt={item.product.title} 
+                    width={64} 
+                    height={64}
+                    style={{ objectFit: "contain", border: "1px solid #e2e8f0", borderRadius: "8px", padding: "4px", background: "#f8fafc" }}
+                  />
+                ) : (
+                  <div style={{ width: 64, height: 64, border: "1px solid #e2e8f0", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", background: "#f8fafc", color: "#94a3b8" }}>
+                    <ShoppingBag size={20} />
+                  </div>
+                )}
                 <div style={{ flex: 1 }}>
                   <h4 style={{ fontSize: "13px", fontWeight: 700, color: "#1e293b", marginBottom: "4px", lineHeight: 1.3 }}>
                     {item.product.title}

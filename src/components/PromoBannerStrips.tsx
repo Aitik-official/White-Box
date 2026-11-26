@@ -37,6 +37,7 @@ export default function PromoBannerStrips({ banners }: PromoBannerStripsProps) {
                 src={b.img} 
                 alt={b.title} 
                 fill 
+                sizes="(max-width: 768px) 100vw, 50vw"
                 style={{ objectFit: "cover" }}
                 className="promo-strip-img"
               />

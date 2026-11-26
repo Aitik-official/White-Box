@@ -43,6 +43,8 @@ export default function ProductSlider({ title, badge = "FEATURED", products, id 
     setStartIndex((prev) => Math.min(products.length - itemsPerPage, prev + itemsPerPage));
   };
 
+  if (!products || products.length === 0) return null;
+
   const visibleProducts = products.slice(startIndex, startIndex + itemsPerPage);
 
   return (

@@ -378,7 +378,13 @@ export default function CheckoutPage() {
               <div style={{ display: "flex", flexDirection: "column", gap: "12px", maxHeight: "240px", overflowY: "auto", paddingBottom: "14px", borderBottom: "1px solid #f1f5f9", marginBottom: "16px" }}>
                 {cart.map((item) => (
                   <div key={item.product.id} style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                    <img src={item.product.img} alt={item.product.title} style={{ width: "42px", height: "42px", objectFit: "contain", borderRadius: "6px", border: "1px solid #e2e8f0" }} />
+                    {item.product.img ? (
+                      <img src={item.product.img} alt={item.product.title} style={{ width: "42px", height: "42px", objectFit: "contain", borderRadius: "6px", border: "1px solid #e2e8f0" }} />
+                    ) : (
+                      <div style={{ width: "42px", height: "42px", borderRadius: "6px", border: "1px solid #e2e8f0", background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <ShoppingBag size={18} color="#94a3b8" />
+                      </div>
+                    )}
                     <div style={{ flex: 1, overflow: "hidden" }}>
                       <div style={{ fontSize: "13px", fontWeight: 700, color: "#0f172a", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                         {item.product.title}
