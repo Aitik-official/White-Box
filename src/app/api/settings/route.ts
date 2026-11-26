@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import SiteSettings from "@/models/SiteSettings";
+import { DEFAULT_HERO } from "@/data/heroDefaults";
 
 const DEFAULT_SETTINGS = {
-  heroTitle: "Gaming Headset Brilliant Lighting Effect",
-  heroSubtitle: "Wireless Connection With TV, Computer, Laptop...",
-  heroButtonText: "DISCOVER NOW",
-  heroImage: "/banners/banner-hero.webp",
+  ...DEFAULT_HERO,
   bannerNotice: "100% Buyer Protection & Genuine Warranty",
   supportPhone: "06-900-6789-00",
   dealsTimerHours: 24,
@@ -18,12 +16,22 @@ export const revalidate = 0;
 export async function GET() {
   try {
     await connectDB();
-    let settings = await SiteSettings.findOne().lean();
+    let settings: any = await SiteSettings.findOne().lean();
     if (!settings) {
       settings = await SiteSettings.create(DEFAULT_SETTINGS);
+      settings = settings.toObject();
     }
+    // Fill any fields missing from older documents (e.g. heroLink, heroTiles)
+    const merged = {
+      ...DEFAULT_SETTINGS,
+      ...settings,
+      heroTiles:
+        Array.isArray(settings.heroTiles) && settings.heroTiles.length > 0
+          ? settings.heroTiles
+          : DEFAULT_SETTINGS.heroTiles,
+    };
     return NextResponse.json(
-      { success: true, settings },
+      { success: true, settings: merged },
       {
         headers: {
           "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
@@ -43,11 +51,14 @@ export async function PUT(req: Request) {
     const body = await req.json();
     await connectDB();
 
+    // Never let the client overwrite Mongo internals
+    const { _id, __v, createdAt, updatedAt, ...payload } = body;
+
     let settings = await SiteSettings.findOne();
     if (!settings) {
-      settings = await SiteSettings.create({ ...DEFAULT_SETTINGS, ...body });
+      settings = await SiteSettings.create({ ...DEFAULT_SETTINGS, ...payload });
     } else {
-      Object.assign(settings, body);
+      Object.assign(settings, payload);
       await settings.save();
     }
 
@@ -57,4 +68,3 @@ export async function PUT(req: Request) {
     return NextResponse.json({ error: "Failed to update settings" }, { status: 500 });
   }
 }
-

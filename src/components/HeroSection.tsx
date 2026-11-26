@@ -1,67 +1,65 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { DEFAULT_HERO, DEFAULT_HERO_TILES, HeroTile } from "@/data/heroDefaults";
 
-const HERO_CARDS = [
-  {
-    href: "/shop?department=Electronics%20%26%20Gadgets",
-    image: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245604/whitebox/banners/banner-hero.webp",
-    alt: "Gaming Headset",
-    label: "DISCOVER NOW",
-    title: "Gaming Headset Brilliant Lighting Effect",
-    subtitle: "Wireless Connection With TV, Computer, Laptop...",
-    isMain: true,
-  },
-];
-
-const TILE_CARDS = [
-  {
-    href: "/shop?category=Smartphones",
-    image: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245604/whitebox/banners/tile-1.webp",
-    alt: "Pro Smartphone 5G",
-    title: "Pro Smartphone 5G",
-    category: "Cellphone & Tablets",
-  },
-  {
-    href: "/shop?q=Galaxy",
-    image: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245606/whitebox/banners/tile-2.webp",
-    alt: "Phone Galaxy S10",
-    title: "Phone Galaxy S10",
-    category: "Cellphone & Tablets",
-  },
-  {
-    href: "/shop?category=Wireless%20Earbuds",
-    image: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245606/whitebox/banners/tile-3.webp",
-    alt: "Wireless Earbuds",
-    title: "Wireless Earbuds",
-    category: "Wireless Earbuds",
-  },
-  {
-    href: "/shop?department=Home%20%26%20Furniture",
-    image: "https://res.cloudinary.com/rpdxkihi/image/upload/v1795245607/whitebox/banners/tile-4.webp",
-    alt: "Executive Lounge Chair",
-    title: "Executive Lounge Chair",
-    category: "Decor & Furniture",
-  },
-];
+type HeroState = {
+  heroTitle: string;
+  heroSubtitle: string;
+  heroButtonText: string;
+  heroImage: string;
+  heroLink: string;
+  heroTiles: HeroTile[];
+};
 
 export default function HeroSection() {
+  // Start with defaults so the layout renders immediately, then swap in admin-edited values
+  const [hero, setHero] = useState<HeroState>(DEFAULT_HERO);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`/api/settings?_t=${Date.now()}`, { cache: "no-store" })
+      .then((r) => r.json())
+      .then((data) => {
+        if (cancelled || !data?.success || !data.settings) return;
+        const s = data.settings;
+        const tiles: HeroTile[] =
+          Array.isArray(s.heroTiles) && s.heroTiles.length > 0 ? s.heroTiles : DEFAULT_HERO_TILES;
+        setHero({
+          heroTitle: s.heroTitle || DEFAULT_HERO.heroTitle,
+          heroSubtitle: s.heroSubtitle || DEFAULT_HERO.heroSubtitle,
+          heroButtonText: s.heroButtonText || DEFAULT_HERO.heroButtonText,
+          heroImage: s.heroImage || DEFAULT_HERO.heroImage,
+          heroLink: s.heroLink || DEFAULT_HERO.heroLink,
+          heroTiles: tiles,
+        });
+      })
+      .catch(() => {
+        /* keep defaults */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <section className="hero-mordern-section">
       <div className="container">
         <div className="hero-mordern-grid">
           {/* Main Hero Banner — full image background */}
-          <Link href="/shop?department=Electronics%20%26%20Gadgets" className="hero-main-card" style={{ position: "relative", overflow: "hidden", display: "block" }}>
-            <Image
-              src="/banners/banner-hero.webp"
-              alt="Gaming Headset"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
-              style={{ objectFit: "cover", objectPosition: "center" }}
-              priority
-            />
+          <Link href={hero.heroLink} className="hero-main-card" style={{ position: "relative", overflow: "hidden", display: "block" }}>
+            {hero.heroImage && (
+              <Image
+                src={hero.heroImage}
+                alt={hero.heroTitle}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
+                style={{ objectFit: "cover", objectPosition: "center" }}
+                priority
+              />
+            )}
             {/* Gradient overlay for text legibility */}
             <div
               style={{
@@ -84,7 +82,7 @@ export default function HeroSection() {
                   textShadow: "0 2px 12px rgba(0,0,0,0.35)",
                 }}
               >
-                Gaming Headset Brilliant Lighting Effect
+                {hero.heroTitle}
               </h1>
               <p
                 style={{
@@ -95,7 +93,7 @@ export default function HeroSection() {
                   textShadow: "0 1px 6px rgba(0,0,0,0.3)",
                 }}
               >
-                Wireless Connection With TV, Computer, Laptop...
+                {hero.heroSubtitle}
               </p>
               <span
                 style={{
@@ -113,27 +111,29 @@ export default function HeroSection() {
                   textTransform: "uppercase",
                 }}
               >
-                DISCOVER NOW
+                {hero.heroButtonText}
               </span>
             </div>
           </Link>
 
-          {/* 4 Tile Cards */}
+          {/* Tile Cards — editable from admin */}
           <div className="modern-tiles-grid">
-            {TILE_CARDS.map((tile) => (
+            {hero.heroTiles.map((tile, i) => (
               <Link
-                key={tile.alt}
-                href={tile.href}
+                key={`${tile.title}-${i}`}
+                href={tile.link || "/shop"}
                 className="modern-tile-card"
                 style={{ position: "relative", overflow: "hidden", display: "block", borderRadius: "24px" }}
               >
-                <Image
-                  src={tile.image}
-                  alt={tile.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
-                  style={{ objectFit: "cover", objectPosition: "center" }}
-                />
+                {tile.image && (
+                  <Image
+                    src={tile.image}
+                    alt={tile.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
+                    style={{ objectFit: "cover", objectPosition: "center" }}
+                  />
+                )}
                 {/* Bottom gradient for text */}
                 <div
                   style={{

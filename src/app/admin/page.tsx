@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import WhiteBoxLogo from "@/components/WhiteBoxLogo";
+import { DEFAULT_HERO, DEFAULT_HERO_TILES } from "@/data/heroDefaults";
 import { 
   LayoutDashboard, 
   Package, 
@@ -107,15 +108,18 @@ export default function AdminDashboardPage() {
   const [editingBlog, setEditingBlog] = useState<any | null>(null);
   const [isAddBlogMode, setIsAddBlogMode] = useState(false);
   const [uploadingBlogImage, setUploadingBlogImage] = useState(false);
-  const [settings, setSettings] = useState({
+  const [settings, setSettings] = useState<any>({
     heroTitle: "",
     heroSubtitle: "",
     heroButtonText: "",
     heroImage: "",
+    heroLink: "",
+    heroTiles: DEFAULT_HERO_TILES,
     bannerNotice: "",
     supportPhone: "",
     dealsTimerHours: 24,
   });
+  const [uploadingSettingsImage, setUploadingSettingsImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
 
@@ -175,7 +179,16 @@ export default function AdminDashboardPage() {
       if (statsRes.stats) setStats(statsRes.stats);
       if (prodRes.products) setProducts(prodRes.products);
       if (ordersRes.orders) setOrders(ordersRes.orders);
-      if (setRes.settings) setSettings(setRes.settings);
+      if (setRes.settings) {
+        setSettings({
+          ...DEFAULT_HERO,
+          ...setRes.settings,
+          heroTiles:
+            Array.isArray(setRes.settings.heroTiles) && setRes.settings.heroTiles.length > 0
+              ? setRes.settings.heroTiles
+              : DEFAULT_HERO_TILES,
+        });
+      }
       if (catRes.categories) setCategories(catRes.categories);
       if (blogRes.blogs) setBlogs(blogRes.blogs);
     } catch (e) {
@@ -689,6 +702,95 @@ export default function AdminDashboardPage() {
       console.error(e);
       notify("Failed to update order");
     }
+  };
+
+  // Upload an image for a homepage hero/tile field (key identifies the field for the spinner)
+  const uploadSettingsImage = async (file: File, key: string, apply: (url: string) => void) => {
+    setUploadingSettingsImage(key);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      const data = await res.json();
+      if (data.success && data.url) {
+        apply(data.url);
+        notify("Image uploaded! Click Save to publish.");
+      } else {
+        notify(data.error || "Image upload failed");
+      }
+    } catch (err) {
+      console.error(err);
+      notify("Error uploading image");
+    } finally {
+      setUploadingSettingsImage(null);
+    }
+  };
+
+  // Image field: live preview + URL input + upload from device
+  const renderSettingsImageField = (key: string, label: string, value: string, onChange: (url: string) => void) => {
+    const isUploading = uploadingSettingsImage === key;
+    return (
+      <div>
+        <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-main)", marginBottom: "6px" }}>{label}</label>
+        <div style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
+          <div style={{ width: "140px", height: "84px", borderRadius: "8px", overflow: "hidden", background: "#f1f5f9", border: "1px solid var(--border-card)", flexShrink: 0, position: "relative" }}>
+            {value ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={value} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            ) : (
+              <span style={{ fontSize: "11px", color: "var(--text-muted)", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>No image</span>
+            )}
+          </div>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
+            <input
+              type="text"
+              value={value}
+              placeholder="https://... or upload from device"
+              onChange={(e) => onChange(e.target.value)}
+              style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid var(--border-card)", outline: "none", fontSize: "13px" }}
+            />
+            <label
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                width: "fit-content",
+                padding: "8px 14px",
+                borderRadius: "8px",
+                background: "var(--wb-navy)",
+                color: "#ffffff",
+                fontSize: "12px",
+                fontWeight: 700,
+                cursor: uploadingSettingsImage ? "not-allowed" : "pointer",
+                opacity: uploadingSettingsImage && !isUploading ? 0.6 : 1,
+              }}
+            >
+              {isUploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+              <span>{isUploading ? "Uploading..." : "Upload from device"}</span>
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                disabled={!!uploadingSettingsImage}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  e.target.value = "";
+                  if (file) uploadSettingsImage(file, key, onChange);
+                }}
+              />
+            </label>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Update one of the four homepage side tiles
+  const setTileField = (index: number, patch: Record<string, string>) => {
+    setSettings((prev: any) => ({
+      ...prev,
+      heroTiles: (prev.heroTiles || DEFAULT_HERO_TILES).map((t: any, i: number) => (i === index ? { ...t, ...patch } : t)),
+    }));
   };
 
   // Save frontend site settings
@@ -2227,28 +2329,102 @@ export default function AdminDashboardPage() {
             </p>
 
             <form onSubmit={handleSaveSettings} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-              <div>
-                <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-main)", marginBottom: "6px" }}>
-                  Hero Main Heading
-                </label>
-                <input
-                  type="text"
-                  value={settings.heroTitle}
-                  onChange={(e) => setSettings({ ...settings, heroTitle: e.target.value })}
-                  style={{ width: "100%", padding: "12px", borderRadius: "8px", border: "1px solid var(--border-card)", outline: "none" }}
-                />
+              {/* MAIN HERO BANNER */}
+              <div style={{ border: "1px solid var(--border-card)", borderRadius: "12px", padding: "18px", display: "flex", flexDirection: "column", gap: "14px" }}>
+                <div>
+                  <h4 style={{ fontSize: "15px", fontWeight: 800, color: "var(--wb-navy)", marginBottom: "2px" }}>Main Hero Banner</h4>
+                  <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>The large banner on the left side of the homepage.</p>
+                </div>
+
+                <div>
+                  <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-main)", marginBottom: "6px" }}>Heading</label>
+                  <input
+                    type="text"
+                    value={settings.heroTitle || ""}
+                    onChange={(e) => setSettings({ ...settings, heroTitle: e.target.value })}
+                    style={{ width: "100%", padding: "12px", borderRadius: "8px", border: "1px solid var(--border-card)", outline: "none" }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-main)", marginBottom: "6px" }}>Subtitle</label>
+                  <input
+                    type="text"
+                    value={settings.heroSubtitle || ""}
+                    onChange={(e) => setSettings({ ...settings, heroSubtitle: e.target.value })}
+                    style={{ width: "100%", padding: "12px", borderRadius: "8px", border: "1px solid var(--border-card)", outline: "none" }}
+                  />
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-main)", marginBottom: "6px" }}>Button Text</label>
+                    <input
+                      type="text"
+                      value={settings.heroButtonText || ""}
+                      onChange={(e) => setSettings({ ...settings, heroButtonText: e.target.value })}
+                      style={{ width: "100%", padding: "12px", borderRadius: "8px", border: "1px solid var(--border-card)", outline: "none" }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-main)", marginBottom: "6px" }}>Click Link (e.g. /shop?department=Electronics)</label>
+                    <input
+                      type="text"
+                      value={settings.heroLink || ""}
+                      onChange={(e) => setSettings({ ...settings, heroLink: e.target.value })}
+                      style={{ width: "100%", padding: "12px", borderRadius: "8px", border: "1px solid var(--border-card)", outline: "none" }}
+                    />
+                  </div>
+                </div>
+
+                {renderSettingsImageField("hero", "Banner Image", settings.heroImage || "", (url) => setSettings({ ...settings, heroImage: url }))}
               </div>
 
-              <div>
-                <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-main)", marginBottom: "6px" }}>
-                  Hero Subtitle
-                </label>
-                <input
-                  type="text"
-                  value={settings.heroSubtitle}
-                  onChange={(e) => setSettings({ ...settings, heroSubtitle: e.target.value })}
-                  style={{ width: "100%", padding: "12px", borderRadius: "8px", border: "1px solid var(--border-card)", outline: "none" }}
-                />
+              {/* FOUR SIDE TILES */}
+              <div style={{ border: "1px solid var(--border-card)", borderRadius: "12px", padding: "18px", display: "flex", flexDirection: "column", gap: "14px" }}>
+                <div>
+                  <h4 style={{ fontSize: "15px", fontWeight: 800, color: "var(--wb-navy)", marginBottom: "2px" }}>Side Tiles (4 cards)</h4>
+                  <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>The four cards on the right side of the hero banner.</p>
+                </div>
+
+                {(settings.heroTiles || DEFAULT_HERO_TILES).map((tile: any, i: number) => (
+                  <div key={i} style={{ border: "1px dashed var(--border-card)", borderRadius: "10px", padding: "14px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                    <strong style={{ fontSize: "13px", color: "var(--text-main)" }}>Tile {i + 1}</strong>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                      <div>
+                        <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-main)", marginBottom: "6px" }}>Title</label>
+                        <input
+                          type="text"
+                          value={tile.title || ""}
+                          onChange={(e) => setTileField(i, { title: e.target.value })}
+                          style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid var(--border-card)", outline: "none" }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-main)", marginBottom: "6px" }}>Small Label (category text)</label>
+                        <input
+                          type="text"
+                          value={tile.category || ""}
+                          onChange={(e) => setTileField(i, { category: e.target.value })}
+                          style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid var(--border-card)", outline: "none" }}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "var(--text-main)", marginBottom: "6px" }}>Click Link (e.g. /shop?category=Smartphones)</label>
+                      <input
+                        type="text"
+                        value={tile.link || ""}
+                        onChange={(e) => setTileField(i, { link: e.target.value })}
+                        style={{ width: "100%", padding: "10px 12px", borderRadius: "8px", border: "1px solid var(--border-card)", outline: "none" }}
+                      />
+                    </div>
+
+                    {renderSettingsImageField(`tile-${i}`, "Tile Image", tile.image || "", (url) => setTileField(i, { image: url }))}
+                  </div>
+                ))}
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
