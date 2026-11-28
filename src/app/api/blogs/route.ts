@@ -53,7 +53,7 @@ export async function GET(req: Request) {
       { success: true, count: blogs.length, blogs },
       {
         headers: {
-          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          "Cache-Control": "public, max-age=0, s-maxage=15, stale-while-revalidate=120",
         },
       }
     );

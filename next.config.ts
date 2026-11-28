@@ -5,17 +5,9 @@ const nextConfig: NextConfig = {
     agentUpgrade: "security",
   },
   images: {
-    unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-      {
-        protocol: "http",
-        hostname: "**",
-      },
-    ],
+    // Custom loader: Cloudinary images are resized + served as WebP/AVIF (see src/lib/imageLoader.ts)
+    loader: "custom",
+    loaderFile: "./src/lib/imageLoader.ts",
   },
 };
 

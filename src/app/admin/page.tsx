@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import WhiteBoxLogo from "@/components/WhiteBoxLogo";
 import { DEFAULT_HERO, DEFAULT_HERO_TILES } from "@/data/heroDefaults";
+import { uploadImage } from "@/lib/uploadImage";
 import { 
   LayoutDashboard, 
   Package, 
@@ -221,35 +222,23 @@ export default function AdminDashboardPage() {
     setUploadingImage(true);
     setUploadProgressMsg("Uploading image to Cloudinary...");
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-
-      if (data.success && data.url) {
-        notify("Image uploaded successfully!");
-        if (isGallery) {
-          setEditingProduct((prev: any) => ({
-            ...prev,
-            gallery: [...(prev.gallery || []), data.url],
-          }));
-        } else {
-          setEditingProduct((prev: any) => ({
-            ...prev,
-            img: data.url,
-            gallery: prev.gallery && prev.gallery.length > 0 ? prev.gallery : [data.url],
-          }));
-        }
+      const url = await uploadImage(file, 1400);
+      notify("Image uploaded successfully!");
+      if (isGallery) {
+        setEditingProduct((prev: any) => ({
+          ...prev,
+          gallery: [...(prev.gallery || []), url],
+        }));
       } else {
-        notify(data.error || "Image upload failed");
+        setEditingProduct((prev: any) => ({
+          ...prev,
+          img: url,
+          gallery: prev.gallery && prev.gallery.length > 0 ? prev.gallery : [url],
+        }));
       }
     } catch (err) {
       console.error(err);
-      notify("Error uploading image");
+      notify(err instanceof Error ? err.message : "Error uploading image");
     } finally {
       setUploadingImage(false);
       setUploadProgressMsg("");
@@ -619,19 +608,12 @@ export default function AdminDashboardPage() {
     if (!file || !editingBlog) return;
     setUploadingBlogImage(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (data.success && data.url) {
-        setEditingBlog({ ...editingBlog, image: data.url });
-        notify("Blog image uploaded!");
-      } else {
-        notify(data.error || "Upload failed");
-      }
+      const url = await uploadImage(file, 1600);
+      setEditingBlog({ ...editingBlog, image: url });
+      notify("Blog image uploaded!");
     } catch (err) {
       console.error(err);
-      notify("Error uploading blog image");
+      notify(err instanceof Error ? err.message : "Error uploading blog image");
     } finally {
       setUploadingBlogImage(false);
       e.target.value = "";
@@ -708,19 +690,13 @@ export default function AdminDashboardPage() {
   const uploadSettingsImage = async (file: File, key: string, apply: (url: string) => void) => {
     setUploadingSettingsImage(key);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
-      const data = await res.json();
-      if (data.success && data.url) {
-        apply(data.url);
-        notify("Image uploaded! Click Save to publish.");
-      } else {
-        notify(data.error || "Image upload failed");
-      }
+      // Hero banner can be wider than the small tiles
+      const url = await uploadImage(file, key === "hero" ? 1920 : 1000);
+      apply(url);
+      notify("Image uploaded! Click Save & Apply Live Changes to publish.");
     } catch (err) {
       console.error(err);
-      notify("Error uploading image");
+      notify(err instanceof Error ? err.message : "Error uploading image");
     } finally {
       setUploadingSettingsImage(null);
     }
@@ -803,8 +779,10 @@ export default function AdminDashboardPage() {
         body: JSON.stringify(settings),
       });
       const data = await res.json();
-      if (data.success) {
+      if (res.ok && data.success) {
         notify("Frontend website settings updated in MongoDB!");
+      } else {
+        notify(data.error || "Failed to update settings");
       }
     } catch (e) {
       console.error(e);

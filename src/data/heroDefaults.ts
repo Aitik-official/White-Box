@@ -34,7 +34,16 @@ export const DEFAULT_HERO_TILES: HeroTile[] = [
   },
 ];
 
-export const DEFAULT_HERO = {
+export type HeroState = {
+  heroTitle: string;
+  heroSubtitle: string;
+  heroButtonText: string;
+  heroImage: string;
+  heroLink: string;
+  heroTiles: HeroTile[];
+};
+
+export const DEFAULT_HERO: HeroState = {
   heroTitle: "Gaming Headset Brilliant Lighting Effect",
   heroSubtitle: "Wireless Connection With TV, Computer, Laptop...",
   heroButtonText: "DISCOVER NOW",
@@ -42,3 +51,25 @@ export const DEFAULT_HERO = {
   heroLink: "/shop?department=Electronics%20%26%20Gadgets",
   heroTiles: DEFAULT_HERO_TILES,
 };
+
+// Turn a raw settings document into render-ready hero data (falls back to defaults per field)
+export function normalizeHero(s: any): HeroState {
+  if (!s) return DEFAULT_HERO;
+  const tiles: HeroTile[] =
+    Array.isArray(s.heroTiles) && s.heroTiles.length > 0
+      ? s.heroTiles.map((t: any) => ({
+          title: t?.title || "",
+          category: t?.category || "",
+          image: t?.image || "",
+          link: t?.link || "/shop",
+        }))
+      : DEFAULT_HERO_TILES;
+  return {
+    heroTitle: s.heroTitle || DEFAULT_HERO.heroTitle,
+    heroSubtitle: s.heroSubtitle || DEFAULT_HERO.heroSubtitle,
+    heroButtonText: s.heroButtonText || DEFAULT_HERO.heroButtonText,
+    heroImage: s.heroImage || DEFAULT_HERO.heroImage,
+    heroLink: s.heroLink || DEFAULT_HERO.heroLink,
+    heroTiles: tiles,
+  };
+}

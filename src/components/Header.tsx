@@ -85,7 +85,7 @@ export default function Header() {
   useEffect(() => {
     async function loadCategories() {
       try {
-        const res = await fetch(`/api/categories?_t=${Date.now()}`, { cache: "no-store" });
+        const res = await fetch("/api/categories");
         const data = await res.json();
         if (data.success && Array.isArray(data.categories)) {
           const sorted = sortCategoriesAZ(data.categories);

@@ -3,38 +3,24 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { DEFAULT_HERO, DEFAULT_HERO_TILES, HeroTile } from "@/data/heroDefaults";
+import { DEFAULT_HERO, HeroState, normalizeHero } from "@/data/heroDefaults";
 
-type HeroState = {
-  heroTitle: string;
-  heroSubtitle: string;
-  heroButtonText: string;
-  heroImage: string;
-  heroLink: string;
-  heroTiles: HeroTile[];
-};
-
-export default function HeroSection() {
-  // Start with defaults so the layout renders immediately, then swap in admin-edited values
-  const [hero, setHero] = useState<HeroState>(DEFAULT_HERO);
+export default function HeroSection({ initial }: { initial?: HeroState | null }) {
+  // `initial` comes from the server (already contains the admin-edited values).
+  // Without it, start with defaults and load the saved settings on the client.
+  const [hero, setHero] = useState<HeroState>(initial ?? DEFAULT_HERO);
 
   useEffect(() => {
+    if (initial) {
+      setHero(initial);
+      return;
+    }
     let cancelled = false;
-    fetch(`/api/settings?_t=${Date.now()}`, { cache: "no-store" })
+    fetch("/api/settings")
       .then((r) => r.json())
       .then((data) => {
         if (cancelled || !data?.success || !data.settings) return;
-        const s = data.settings;
-        const tiles: HeroTile[] =
-          Array.isArray(s.heroTiles) && s.heroTiles.length > 0 ? s.heroTiles : DEFAULT_HERO_TILES;
-        setHero({
-          heroTitle: s.heroTitle || DEFAULT_HERO.heroTitle,
-          heroSubtitle: s.heroSubtitle || DEFAULT_HERO.heroSubtitle,
-          heroButtonText: s.heroButtonText || DEFAULT_HERO.heroButtonText,
-          heroImage: s.heroImage || DEFAULT_HERO.heroImage,
-          heroLink: s.heroLink || DEFAULT_HERO.heroLink,
-          heroTiles: tiles,
-        });
+        setHero(normalizeHero(data.settings));
       })
       .catch(() => {
         /* keep defaults */
@@ -42,7 +28,7 @@ export default function HeroSection() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [initial]);
 
   return (
     <section className="hero-mordern-section">
@@ -130,8 +116,9 @@ export default function HeroSection() {
                     src={tile.image}
                     alt={tile.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
+                    sizes="(max-width: 768px) 50vw, 300px"
                     style={{ objectFit: "cover", objectPosition: "center" }}
+                    priority={i < 2}
                   />
                 )}
                 {/* Bottom gradient for text */}

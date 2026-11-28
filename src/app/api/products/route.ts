@@ -142,9 +142,7 @@ export async function GET(req: Request) {
       },
       {
         headers: {
-          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-          Pragma: "no-cache",
-          Expires: "0",
+          "Cache-Control": "public, max-age=0, s-maxage=15, stale-while-revalidate=120",
         },
       }
     );

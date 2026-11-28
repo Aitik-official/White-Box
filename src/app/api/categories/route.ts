@@ -35,9 +35,8 @@ export async function GET() {
       },
       {
         headers: {
-          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-          Pragma: "no-cache",
-          Expires: "0",
+          // Edge-cached for a few seconds: storefront stays fast, admin edits show up almost instantly
+          "Cache-Control": "public, max-age=0, s-maxage=15, stale-while-revalidate=120",
         },
       }
     );

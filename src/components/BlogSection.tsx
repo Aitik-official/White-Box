@@ -12,7 +12,7 @@ export default function BlogSection() {
   useEffect(() => {
     async function loadBlogs() {
       try {
-        const res = await fetch(`/api/blogs?published=true&_t=${Date.now()}`, { cache: "no-store" });
+        const res = await fetch("/api/blogs?published=true");
         const data = await res.json();
         if (data.success && Array.isArray(data.blogs) && data.blogs.length > 0) {
           setPosts(data.blogs.slice(0, 6));

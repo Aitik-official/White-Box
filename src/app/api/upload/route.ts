@@ -47,7 +47,12 @@ export async function POST(req: Request) {
         });
       }
     } catch (cloudErr) {
-      console.warn("Cloudinary direct upload encountered an issue, falling back to local storage:", cloudErr);
+      console.warn("Cloudinary direct upload encountered an issue:", cloudErr);
+      // Serverless hosts (Vercel) have a read-only disk, so a local fallback can never work there.
+      if (process.env.VERCEL) {
+        const message = (cloudErr as { message?: string })?.message || "Cloudinary upload failed";
+        return NextResponse.json({ error: `Image upload failed: ${message}` }, { status: 502 });
+      }
     }
 
     // 2. Resilient Fallback: Local public/uploads/ storage

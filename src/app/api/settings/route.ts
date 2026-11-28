@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { connectDB } from "@/lib/mongodb";
 import SiteSettings from "@/models/SiteSettings";
 import { DEFAULT_HERO } from "@/data/heroDefaults";
@@ -61,6 +62,9 @@ export async function PUT(req: Request) {
       Object.assign(settings, payload);
       await settings.save();
     }
+
+    // Rebuild the (cached) homepage right away so the new hero/tiles show up instantly
+    revalidatePath("/");
 
     return NextResponse.json({ success: true, settings });
   } catch (err: unknown) {

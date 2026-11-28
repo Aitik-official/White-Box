@@ -32,7 +32,7 @@ export default function CategoryGrid() {
   React.useEffect(() => {
     async function loadLiveCategories() {
       try {
-        const res = await fetch(`/api/categories?_t=${Date.now()}`, { cache: "no-store" });
+        const res = await fetch("/api/categories");
         const data = await res.json();
         if (data.success && Array.isArray(data.categories) && data.categories.length > 0) {
           const mapped = data.categories.slice(0, 8).map((c: any, i: number) => ({
