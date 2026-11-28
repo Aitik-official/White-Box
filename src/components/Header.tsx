@@ -27,8 +27,10 @@ import {
   Camera,
   Shirt,
   Layers,
-  Package
+  Package,
+  Mail
 } from "lucide-react";
+import { SUPPORT_EMAIL } from "@/lib/siteConfig";
 import { useCart } from "@/context/CartContext";
 import WhiteBoxLogo from "./WhiteBoxLogo";
 
@@ -169,6 +171,13 @@ export default function Header() {
             <div className="header-top-left">
               <span>Got Question? Call WhiteBox Care 24/7:</span>
               <strong style={{ letterSpacing: "0.3px" }}>06-900-6789-00</strong>
+              <span style={{ margin: "0 8px", opacity: 0.3 }}>|</span>
+              <a
+                href={`mailto:${SUPPORT_EMAIL}`}
+                style={{ display: "inline-flex", alignItems: "center", gap: "4px", color: "inherit", fontWeight: 600 }}
+              >
+                <Mail size={14} /> {SUPPORT_EMAIL}
+              </a>
               <span style={{ margin: "0 8px", opacity: 0.3 }}>|</span>
               <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", color: "var(--wb-cyan)", fontWeight: 600 }}>
                 <ShieldCheck size={14} /> 100% Buyer Protection & Genuine Warranty

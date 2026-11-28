@@ -8,9 +8,11 @@ import {
   Headphones, 
   RotateCcw, 
   Smile, 
-  PhoneCall
+  PhoneCall,
+  Mail
 } from "lucide-react";
 import WhiteBoxLogo from "./WhiteBoxLogo";
+import { SUPPORT_EMAIL } from "@/lib/siteConfig";
 
 export default function Footer() {
   return (
@@ -86,6 +88,13 @@ export default function Footer() {
               <PhoneCall size={18} />
               <span>06-900-6789-00</span>
             </div>
+            <a
+              href={`mailto:${SUPPORT_EMAIL}`}
+              style={{ display: "flex", alignItems: "center", gap: "10px", color: "#ff8a65", fontWeight: 700, marginTop: "10px" }}
+            >
+              <Mail size={18} />
+              <span>{SUPPORT_EMAIL}</span>
+            </a>
           </div>
 
           <div>
